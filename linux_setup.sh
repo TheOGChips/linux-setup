@@ -56,8 +56,8 @@ elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
     fi
 fi
 
-# TODO: Reassign full screen mode of Okular from Ctrl+Shift+F to F11 (As far as I know, this was only
-#       an issue in Debian Bullseye)
+# Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
+sed -i 's;</gui>;  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>;' ~/.local/share/kxmlgui5/okular/shell.rc
 
 # Make edits to the sudoers file
 bash visudo_edits.sh "$pkg_mgr" "$alt_pkg_mgr"
