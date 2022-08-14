@@ -5,25 +5,28 @@ BASH_ALIASES="$HOME"/.bash_aliases
 ZSH_ALIASES="$HOME"/.zsh_aliases
 ALIASES="$ZSH_ALIASES"
 ln -s "$ZSH_ALIASES" "$BASH_ALIASES"
+DEBIAN="debian bullseye"
+FEDORA="fedora"
+ROCKY="rocky"
 
-if [ "$1" = "debian" ]
+if [ "$1" = "$DEBIAN" ]
     then
     pkg_mgr=apt
     alt_pkg_mgr=dpkg
-elif [ "$1" = "fedora" ]
+elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
     then
     pkg_mgr=dnf
     alt_pkg_mgr=rpm
 elif [ "$1" = "" ]
     then
-    echo 'Remember to enter a distribution name for this script to work'
+    echo 'You must enter a distribution name for this script to work'
     exit -1
 else
     echo 'That distribution is currently unsupported'
 fi
 
-sudo "$pkg_mgr" update
-sudo "$pkg_mgr" upgrade
+sudo "$pkg_mgr" -y update
+sudo "$pkg_mgr" -y upgrade
 
 function install_pkg {
     sudo "$pkg_mgr" -y install "$*"
@@ -36,19 +39,40 @@ function rm_pkg {
 # Remove unwanted packages
 echo -e '\nRemoving unwanted packages...\n'
 sleep "$READING_TIME"
-rm_pkg akonadi-import-wizard akregator dragon elisa-player kgpg kmail kmines kmousetool kmouth kolourpaint
-rm_pkg konversation krdc krfb kwrite libreoffice-core
-#TODO: Add differences for Debian
+rm_pkg akregator kmail kmousetool kmouth kwrite libreoffice-core
+if [ "$1" = "$DEBIAN" ]
+    then
+    rm_pkg dragonplayer knotes konqueror kontrast termit
+    sudo rm `sudo find / -name '*contactthemeeditor*'`	# Remove the Contact Theme Editor desktop icon
+elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
+    then
+    rm_pkg akonadi-import-wizard dragon kgpg kmines kolourpaint konversation krdc krfb
+    if [ "$1" = "$FEDORA" ]
+        then
+        rm_pkg elisa-player
+    elif [ "$1" = "$ROCKY" ]
+        then
+        rm_pkg kcolorchooser
+    fi
+fi
+
+# TODO: Reassign full screen mode of Okular from Ctrl+Shift+F to F11 (As far as I know, this was only
+#       an issue in Debian Bullseye)
 
 # Make edits to the sudoers file
-bash visudo_edits.sh
+bash visudo_edits.sh "$pkg_mgr" "$alt_pkg_mgr"
 echo "alias su='sudo su'" >> "$HOME"/.zsh_aliases
 
 # Update GRUB menu timeout
 echo -e '\nUpdating GRUB menu timeout...\n'
 sleep "$READING_TIME"
-echo "alias update-grub='sudo grub2-mkconfig -o /boot/grub2/grub.cfg'" >> "$ALIASES"
+if [ "$1" = "$FEDORA" ]
+    then
+    echo "alias update-grub='sudo grub2-mkconfig -o /boot/grub2/grub.cfg'" >> "$ALIASES"
+fi
 sudo sed -i 's;GRUB_TIMEOUT=5;GRUB_TIMEOUT=-1;' /etc/default/grub
+source "$BASH_ALIASES"
+update-grub
 
 # Configure Nano
 echo -e '\nConfiguring nano...\n'
@@ -63,15 +87,52 @@ bash ssh_config.sh
 # Install desired packages
 echo -e '\nInstalling packages...\n'
 sleep "$READING_TIME"
-rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
-install_pkg neofetch kate gnote vinagre java-latest-openjdk ffmpeg-free virt-manager gcc-c++ openmpi
-install_pkg mingw{32,64}-gcc-c++ quentier ksudoku kmahjongg knights kpat python2.7 python3-pip gimp
-install_pkg simplescreenrecorder ruby ruby-doc clojure gprolog gprolog-docs racket racket-doc htop vim
-install_pkg vim-fugitive tree doxygen clang nasm julia julia-doc gimp-heif-plugin screen texstudio dmg2img
-install_pkg cmatrix sl thefuck zsh plasma-browser-integration
-#install_pkg rstudio-desktop ddd debootstrap
-#TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager
+
+if [ "$1" = "$FEDORA" ]
+    then
+    rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
+elif [ "$1" = "$ROCKY" ]
+    then
+    install_pkg rpmfusion-free-release
+    install_pkg fuse-exfat exfatprogs #exfat-utils
+    install_pkg epel-release
+fi
+
+install_pkg clang clojure cmatrix dmg2img doxygen gimp gimp-heif-plugin gnote gprolog gprolog-docs htop
+install_pkg julia julia-doc kate kmahjongg knights kpat ksudoku make nasm neofetch
+install_pkg plasma-browser-integration python3-pip simplescreenrecorder racket racket-doc ruby ruby-doc
+install_pkg screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagre vlc zsh
+#install_pkg ddd debootstrap
+#TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager)
 #TODO: Might need to install something else to get OpenMP to work with Clang
+if [ "$1" = "$DEBIAN" ]
+    then
+    install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
+    install_pkg mingw-w64 net-tools nixnote2 python2
+    install_pkg openmpi-bin openmpi-common libopenmpi3 libopenmpi-dev   # OpenMPI
+    install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
+    bash install_VMM.sh
+    #bash install_RStudio.sh
+elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
+    then
+    install_pkg gcc-c++ virt-manager
+    if [ "$1" = "$FEDORA" ]
+        then
+        install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ openmpi quentier
+        install_pkg python2.7 #rstudio-desktop
+        # NOTE: Quentier might be a better option for Debian as well
+    elif [ "$1" = "$ROCKY" ]
+        then
+        install_pkg python3
+    fi
+fi
+
+# Start NixNote sync with Evernote on Debian (it will take awhile
+if [ "$1" = "$DEBIAN" ]
+    then
+    nixnote2 &
+# TODO: Fedora: Don't know if Quentier will need the same yet
+fi
 
 # Create local binaries directory
 echo -e '\nCreating local app directories...\n'
@@ -99,14 +160,14 @@ echo 'export CPLUS_INCLUDE_PATH' >> "$PROFILE"
 echo >> "$PROFILE"
 
 #TODO: Installing stuff for the Raspberry Pi cluster
+# Setup access to the Raspberry Pi cluster
+#bash cluster_access_setup/node_ssh_aliases_setup.sh
+#bash cluster_access_setup/clusterssh_setup.sh
 
 # Install JFLAP
 echo -e '\nInstalling JFLAP...\n'
 sleep "$READING_TIME"
-JFLAP=JFLAP7.1.jar
-wget "https://www.jflap.org/jflaptmp/july27-18/$JFLAP" #change URL as necessary
-mv "$JFLAP"
-echo "alias jflap='java -jar $HOME/.local/bin/$JFLAP'" >> "$ALIASES"
+bash install_JFLAP.sh
 
 # Set up Windows C/C++ compilation environment
 sleep "$READING_TIME"
@@ -121,27 +182,41 @@ echo -e '\nInstalling Python Pip modules...\n'
 sleep "$READING_TIME"
 pip install numpy pandas matplotlib scipy ipython
 
-# TODO: Set up ArnoldC
-#echo -e '\nInstalling ArnoldC...\n'
-#echo "alias arnoldc='bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh'" >> "$ALIASES"
+# Set up ArnoldC
+echo -e '\nInstalling ArnoldC...\n'
+echo "alias arnoldc='bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh'" >> "$ALIASES"
 
-# TODO: OCaml install and setup
+# TODO: Still need to actually do this
+# TODO: Move this out of college_stuff and into $HOME/.local/bin?
+# OCaml install and setup
+# NOTE: Ensure Torchwood is mounted before running this line
+bash "$HOME"/Documents/college_stuff/7.\ Spring\ 2020/CSC\ 3710\ \(Foundations\ of\ Computer\ Science\)/OCaml\ Program/OCaml\ Setup/debian_ocaml_install.sh
 
-# TODO: Io install and setup
+# TODO: Still need to actually do this
+# Io install and setup
+bash update_Io.sh
 
 # TODO: Look into how to create a chroot jail (or how to use debootstrap, which surpisingly exists in Fedora's repos)
+# Alias for restarting chroot jail
+#echo "alias chroot-startup='zsh ~/Documents/linux_files/chroot_jail/chroot_startup.sh'" >> "$ALIASES"
 
-# Install and configure Vim
+# Configure Vim
+echo -e '\nConfiguring Vim...\n'
+sleep "$READING_TIME"
 bash vim_config.sh "$pkg_mgr"
+# NOTE: There's probably an extra config step to get Julia to work properly in Vim
 
 # Configure MPI to work with clang
 echo -e '\nConfiguring MPI to work with Clang...\n'
+sleep "$READING_TIME"
 echo "alias mpiclang='OMPI_CC=clang mpicc'" >> "$ALIASES"
 echo "alias mpiclang++='OMPI_CC=clang++ mpic++'" >> "$ALIASES"
 
 # TODO: Install Vivi (for screen sharing at school)
+#bash install_vivi.sh
 
 # TODO: Install VMware Horizon Linux client
+#bash install_vmware_horizon.sh
 
 # echo -e '\nNOTE: Check this script for notes on how to install the Waveforms SDK\n\n'
 # Download and install the Adept runtime environment, then Waveforms
@@ -164,8 +239,29 @@ echo 'eval $(thefuck --alias)' >> "$HOME"/.bashrc
 zsh zsh_config.sh
 
 # Install Flatpak apps
+echo -e '\nAdding Flathub repo and installing Flatpak apps...\n'
+sleep "$READING_TIME"
 bash flatpak_installs.sh
 
 # TODO: Install Arduino with Teensyduino
+#echo -e '\nInstalling Arduino and Teensyduino...\n'
+#sleep "$READING_TIME"
+#bash arduino_teensyduino_install.sh
 
 # TODO: Map /media to /run/media
+
+# Setup WINE
+#wine_install_and_setup.sh
+
+if [ "$1" = "$DEBIAN" ]
+    then
+    # TODO: Add disabling of touchscreen in /usr/share/X11/xorg.conf.d/40-libinput.conf
+    firefox https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
+fi
+
+if [ "$1" = "$ROCKY" ]
+    then
+    echo "alias clear=\"printf '\33c\e[3J'\"" >> "$ALIASES"
+fi
+
+sudo dnf -y autoremove
