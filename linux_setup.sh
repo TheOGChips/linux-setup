@@ -256,7 +256,9 @@ echo -e '\nInstalling Arduino and Teensyduino...\n'
 sleep "$READING_TIME"
 bash install_teensyduino.sh
 
-# TODO: Map /media to /run/media
+# Map /media to /run/media
+sudo rmdir /media
+sudo ln -s /run/media /media
 
 # Setup WINE
 #wine_install_and_setup.sh
