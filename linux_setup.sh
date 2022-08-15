@@ -223,8 +223,8 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
 fi
 bash install_vivi.sh "$distro" "$pkg_ext"
 
-# TODO: Install VMware Horizon Linux client
-#bash install_vmware_horizon.sh
+# Install VMware Horizon Linux client
+bash install_vmware_horizon.sh
 
 # echo -e '\nNOTE: Check this script for notes on how to install the Waveforms SDK\n\n'
 # Download and install the Adept runtime environment, then Waveforms
