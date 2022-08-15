@@ -5,19 +5,20 @@ BASH_ALIASES="$HOME"/.bash_aliases
 ZSH_ALIASES="$HOME"/.zsh_aliases
 ALIASES="$ZSH_ALIASES"
 ln -s "$ZSH_ALIASES" "$BASH_ALIASES"
+distro="$1"
 DEBIAN="debian bullseye"
 FEDORA="fedora"
 ROCKY="rocky"
 
-if [ "$1" = "$DEBIAN" ]
+if [ "$distro" = "$DEBIAN" ]
     then
     pkg_mgr=apt
     alt_pkg_mgr=dpkg
-elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
+elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
     pkg_mgr=dnf
     alt_pkg_mgr=rpm
-elif [ "$1" = "" ]
+elif [ "$distro" = "" ]
     then
     echo 'You must enter a distribution name for this script to work'
     exit -1
@@ -40,17 +41,17 @@ function rm_pkg {
 echo -e '\nRemoving unwanted packages...\n'
 sleep "$READING_TIME"
 rm_pkg akregator kmail kmousetool kmouth kwrite libreoffice-core
-if [ "$1" = "$DEBIAN" ]
+if [ "$distro" = "$DEBIAN" ]
     then
     rm_pkg dragonplayer knotes konqueror kontrast termit
     sudo rm `sudo find / -name '*contactthemeeditor*'`	# Remove the Contact Theme Editor desktop icon
-elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
+elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
     rm_pkg akonadi-import-wizard dragon kgpg kmines kolourpaint konversation krdc krfb
-    if [ "$1" = "$FEDORA" ]
+    if [ "$distro" = "$FEDORA" ]
         then
         rm_pkg elisa-player
-    elif [ "$1" = "$ROCKY" ]
+    elif [ "$distro" = "$ROCKY" ]
         then
         rm_pkg kcolorchooser
     fi
@@ -66,7 +67,7 @@ echo "alias su='sudo su'" >> "$HOME"/.zsh_aliases
 # Update GRUB menu timeout
 echo -e '\nUpdating GRUB menu timeout...\n'
 sleep "$READING_TIME"
-if [ "$1" = "$FEDORA" ]
+if [ "$distro" = "$FEDORA" ]
     then
     echo "alias update-grub='sudo grub2-mkconfig -o /boot/grub2/grub.cfg'" >> "$ALIASES"
 fi
@@ -88,10 +89,10 @@ bash ssh_config.sh
 echo -e '\nInstalling packages...\n'
 sleep "$READING_TIME"
 
-if [ "$1" = "$FEDORA" ]
+if [ "$distro" = "$FEDORA" ]
     then
     rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
-elif [ "$1" = "$ROCKY" ]
+elif [ "$distro" = "$ROCKY" ]
     then
     install_pkg rpmfusion-free-release
     install_pkg fuse-exfat exfatprogs #exfat-utils
@@ -105,7 +106,7 @@ install_pkg screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagr
 #install_pkg ddd debootstrap
 #TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager)
 #TODO: Might need to install something else to get OpenMP to work with Clang
-if [ "$1" = "$DEBIAN" ]
+if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
     install_pkg mingw-w64 net-tools nixnote2 python2
@@ -113,22 +114,22 @@ if [ "$1" = "$DEBIAN" ]
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     bash install_VMM.sh
     #bash install_RStudio.sh
-elif [ "$1" = "$FEDORA" -o "$1" = "$ROCKY" ]
+elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
     install_pkg gcc-c++ virt-manager
-    if [ "$1" = "$FEDORA" ]
+    if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ openmpi quentier
         install_pkg python2.7 #rstudio-desktop
         # NOTE: Quentier might be a better option for Debian as well
-    elif [ "$1" = "$ROCKY" ]
+    elif [ "$distro" = "$ROCKY" ]
         then
         install_pkg python3
     fi
 fi
 
 # Start NixNote sync with Evernote on Debian (it will take awhile
-if [ "$1" = "$DEBIAN" ]
+if [ "$distro" = "$DEBIAN" ]
     then
     nixnote2 &
 # TODO: Fedora: Don't know if Quentier will need the same yet
@@ -213,7 +214,14 @@ echo "alias mpiclang='OMPI_CC=clang mpicc'" >> "$ALIASES"
 echo "alias mpiclang++='OMPI_CC=clang++ mpic++'" >> "$ALIASES"
 
 # TODO: Install Vivi (for screen sharing at school)
-#bash install_vivi.sh
+if [ "$distro" = "$DEBIAN" ]
+    then
+    pkg_ext=deb
+elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
+    then
+    pkg_ext="$alt_pkg_mgr"
+fi
+bash install_vivi.sh "$distro" "$pkg_ext"
 
 # TODO: Install VMware Horizon Linux client
 #bash install_vmware_horizon.sh
@@ -253,13 +261,13 @@ bash flatpak_installs.sh
 # Setup WINE
 #wine_install_and_setup.sh
 
-if [ "$1" = "$DEBIAN" ]
+if [ "$distro" = "$DEBIAN" ]
     then
     # TODO: Add disabling of touchscreen in /usr/share/X11/xorg.conf.d/40-libinput.conf
     firefox https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
 fi
 
-if [ "$1" = "$ROCKY" ]
+if [ "$distro" = "$ROCKY" ]
     then
     echo "alias clear=\"printf '\33c\e[3J'\"" >> "$ALIASES"
 fi
