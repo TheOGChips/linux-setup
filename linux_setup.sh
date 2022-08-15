@@ -236,7 +236,7 @@ bash install_vmware_horizon.sh
 #firefox https://mautic.digilentinc.com/adept-runtime-download
 #firefox https://digilent.com/shop/software/digilent-waveforms/download
 
-# TODO: Download and install MATLAB
+# TODO: Download and install MATLAB (currently getting a "file too short" error for libicudata.so.69)
 #firefox https://www.mathworks.com/downloads/
 #echo "alias update-matlab='sudo /usr/local/MATLAB/R2021a/bin/glnxa64/update_installer'" >> .bash_aliases
 
@@ -251,10 +251,10 @@ echo -e '\nAdding Flathub repo and installing Flatpak apps...\n'
 sleep "$READING_TIME"
 bash flatpak_installs.sh
 
-# TODO: Install Arduino with Teensyduino
-#echo -e '\nInstalling Arduino and Teensyduino...\n'
-#sleep "$READING_TIME"
-#bash arduino_teensyduino_install.sh
+# Install Arduino with Teensyduino
+echo -e '\nInstalling Arduino and Teensyduino...\n'
+sleep "$READING_TIME"
+bash install_teensyduino.sh
 
 # TODO: Map /media to /run/media
 
