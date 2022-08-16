@@ -68,11 +68,13 @@ echo 'fi' >> "$ZSHENV"
 echo >> "$ZSHENV"
 
 # .zkbd
-# This assumes the file xterm-256color-:0.0 is being copied to xterm-256color-:0
-norm_zkbd="$(ls -1 $ZKBD)"
+# This assumes the file in .zkbd is created on a Wayland session
+zkbd_wayland="$(ls -1 $ZKBD)"
+zkbd_x11="$(cut -b 16 $zkbd_wayland)":0
 #vscodium_zkbd="$(ls -1 $ZKBD | cut -b -17)"
 #cp "$ZKBD"/"$norm_zkbd" "$ZKBD"/"$vscodium_zkbd"
-cp "$ZKBD"/"$norm_zkbd" "$ZKBD"/screen."$norm_zkbd"
+cp "$ZKBD"/"$zkbd_wayland" "$ZKBD"/screen."$zkbd_wayland" "$ZKBD"/"$zkbd_x11"
+cp "$ZKBD"/"$zkbd_x11" "$ZKBD"/screen."$zkbd_x11"
 
 # Change system default shell to Z shell
 chsh -s /usr/bin/zsh
