@@ -100,7 +100,7 @@ elif [ "$distro" = "$ROCKY" ]
 fi
 
 install_pkg clang clojure cmatrix dmg2img doxygen gimp gimp-heif-plugin gnote gprolog gprolog-docs
-install_pkg htop julia julia-doc kate kmahjongg knights kpat ksudoku latte-dock make nasm neofetch
+install_pkg htop julia julia-doc kate kmahjongg knights kpat ksudoku make nasm neofetch plank
 install_pkg plasma-browser-integration python3-pip simplescreenrecorder racket racket-doc ruby
 install_pkg ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagre vlc zsh
 #install_pkg ddd debootstrap
