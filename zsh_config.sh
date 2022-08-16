@@ -72,7 +72,7 @@ echo >> "$ZSHENV"
 norm_zkbd="$(ls -1 $ZKBD)"
 #vscodium_zkbd="$(ls -1 $ZKBD | cut -b -17)"
 #cp "$ZKBD"/"$norm_zkbd" "$ZKBD"/"$vscodium_zkbd"
-cp "$ZKBD"/screen."$norm_zkbd"
+cp "$ZKBD"/"$norm_zkbd" "$ZKBD"/screen."$norm_zkbd"
 
 # Change system default shell to Z shell
 chsh -s /usr/bin/zsh
