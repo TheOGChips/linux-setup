@@ -91,7 +91,7 @@ sleep "$READING_TIME"
 
 if [ "$distro" = "$FEDORA" ]
     then
-    rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
+    sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
 elif [ "$distro" = "$ROCKY" ]
     then
     install_pkg rpmfusion-free-release
@@ -99,10 +99,10 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-install_pkg clang clojure cmatrix dmg2img doxygen gimp gimp-heif-plugin gnote gprolog gprolog-docs htop
-install_pkg julia julia-doc kate kmahjongg knights kpat ksudoku make nasm neofetch
-install_pkg plasma-browser-integration python3-pip simplescreenrecorder racket racket-doc ruby ruby-doc
-install_pkg screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagre vlc zsh
+install_pkg clang clojure cmatrix dmg2img doxygen gimp gimp-heif-plugin gnote gprolog gprolog-docs
+install_pkg htop julia julia-doc kate kmahjongg knights kpat ksudoku latte-dock make nasm neofetch
+install_pkg plasma-browser-integration python3-pip simplescreenrecorder racket racket-doc ruby
+install_pkg ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagre vlc zsh
 #install_pkg ddd debootstrap
 #TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager)
 #TODO: Might need to install something else to get OpenMP to work with Clang
@@ -213,7 +213,7 @@ sleep "$READING_TIME"
 echo "alias mpiclang='OMPI_CC=clang mpicc'" >> "$ALIASES"
 echo "alias mpiclang++='OMPI_CC=clang++ mpic++'" >> "$ALIASES"
 
-# TODO: Install Vivi (for screen sharing at school)
+# Install Vivi (for screen sharing at school)
 if [ "$distro" = "$DEBIAN" ]
     then
     pkg_ext=deb
