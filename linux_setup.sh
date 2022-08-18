@@ -110,7 +110,6 @@ if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
     install_pkg mingw-w64 net-tools nixnote2 python2
-    install_pkg openmpi-bin openmpi-common libopenmpi3 libopenmpi-dev   # OpenMPI
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     bash install_VMM.sh
     #bash install_RStudio.sh
@@ -119,8 +118,8 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     install_pkg gcc-c++ virt-manager
     if [ "$distro" = "$FEDORA" ]
         then
-        install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ openmpi quentier
-        install_pkg python2.7 #rstudio-desktop
+        install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
+        install_pkg quentier #rstudio-desktop
         # NOTE: Quentier might be a better option for Debian as well
     elif [ "$distro" = "$ROCKY" ]
         then
@@ -274,4 +273,7 @@ if [ "$distro" = "$ROCKY" ]
     echo "alias clear=\"printf '\33c\e[3J'\"" >> "$ALIASES"
 fi
 
+bash install_MPI.sh "$distro" "$pkg_mgr"
+
+# TODO: Fix "dnf" here
 sudo dnf -y autoremove
