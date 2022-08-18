@@ -275,5 +275,4 @@ fi
 
 bash install_MPI.sh "$distro" "$pkg_mgr"
 
-# TODO: Fix "dnf" here
-sudo dnf -y autoremove
+sudo "$pkg_mgr" -y autoremove
