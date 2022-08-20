@@ -106,7 +106,6 @@ install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck th
 install_pkg vinagre vlc zsh
 #install_pkg ddd debootstrap
 
-#TODO: Might need to install something else to get OpenMP to work with Clang
 if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
@@ -116,7 +115,7 @@ if [ "$distro" = "$DEBIAN" ]
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    install_pkg gcc-c++ virt-manager
+    install_pkg gcc-c++ libomp libomp-devel virt-manager
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
