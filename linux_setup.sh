@@ -47,7 +47,7 @@ if [ "$distro" = "$DEBIAN" ]
     sudo rm `sudo find / -name '*contactthemeeditor*'`	# Remove the Contact Theme Editor desktop icon
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    rm_pkg akonadi-import-wizard dragon kgpg kmines kolourpaint konversation krdc krfb
+    rm_pkg akonadi-import-wizard dragon k{gpg,mines,rdc,rfb} kolourpaint konversation
     if [ "$distro" = "$FEDORA" ]
         then
         rm_pkg elisa-player
@@ -99,11 +99,12 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-install_pkg clang clojure cmatrix dconf-editor dmg2img doxygen gimp gimp-heif-plugin gnote gprolog
-install_pkg gprolog-docs htop julia julia-doc kate kmahjongg knights kpat ksudoku make nasm
-install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenrecorder racket
-install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim
-install_pkg vinagre vlc zsh
+# TODO: Remove vim* installs from here (leave it to vim_config.sh)
+install_pkg clang clojure cmatrix dconf-editor dmg2img doxygen gimp{,-heif-plugin} gnote
+install_pkg gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku} make nasm
+install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenrecorder
+install_pkg racket{,-doc} ruby{,-doc} screen sl vim-fugitive texstudio thefuck thunderbird tree
+install_pkg vim vinagre vlc zsh
 #install_pkg ddd debootstrap
 bash install_quentier.sh "$distro" "$pkg_mgr"
 bash install_VMM.sh "$distro" "$pkg_mgr"
@@ -111,7 +112,7 @@ bash install_VMM.sh "$distro" "$pkg_mgr"
 if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
-    install_pkg mingw-w64 net-tools nixnote2 python2
+    install_pkg mingw-w64 net-tools python2
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
