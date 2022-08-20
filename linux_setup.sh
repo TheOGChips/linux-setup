@@ -99,10 +99,11 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-install_pkg clang clojure cmatrix dmg2img doxygen gimp gimp-heif-plugin gnote gprolog gprolog-docs
-install_pkg htop julia julia-doc kate kmahjongg knights kpat ksudoku make nasm neofetch plank
-install_pkg plasma-browser-integration python3-pip simplescreenrecorder racket racket-doc ruby
-install_pkg ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim vinagre vlc zsh
+install_pkg clang clojure cmatrix dconf-editor dmg2img doxygen gimp gimp-heif-plugin gnote gprolog
+install_pkg gprolog-docs htop julia julia-doc kate kmahjongg knights kpat ksudoku make nasm
+install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenrecorder racket
+install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim
+install_pkg vinagre vlc zsh
 #install_pkg ddd debootstrap
 #TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager)
 #TODO: Might need to install something else to get OpenMP to work with Clang
