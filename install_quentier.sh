@@ -6,6 +6,7 @@ ROCKY="rocky"
 distro="$1"
 pkg_mgr="$2"
 
+# src: https://software.opensuse.org//download.html?project=home%3Ad1vanov%3Aquentier-master&package=quentier-qt5
 if [ "$distro" = "$DEBIAN" ]
     then
     # NOTE: Some extra steps required to install on Debian Bullseye
