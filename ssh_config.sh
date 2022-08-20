@@ -28,8 +28,8 @@ echo -e 'Generating key for Raspberry Pi 4...\n'
 ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
 
 remote=debian-vm
-echo "Host $remote"
-echo '    HostName 192.168.122.224'
-echo "    IdentityFile $SSH/$remote"
+echo "Host $remote" >> "$SSH_CONFIG"
+echo '    HostName 192.168.122.224' >> "$SSH_CONFIG"
+echo "    IdentityFile $SSH/$remote" >> "$SSH_CONFIG"
 echo -e 'Generating key for Debian VM...\n'
 ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
