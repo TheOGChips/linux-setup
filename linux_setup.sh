@@ -99,12 +99,10 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-# TODO: Remove vim* installs from here (leave it to vim_config.sh)
 install_pkg clang clojure cmatrix dconf-editor dmg2img doxygen gimp{,-heif-plugin} gnote
 install_pkg gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku} make nasm
 install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenrecorder
-install_pkg racket{,-doc} ruby{,-doc} screen sl vim-fugitive texstudio thefuck thunderbird tree
-install_pkg vim vinagre vlc zsh
+install_pkg racket{,-doc} ruby{,-doc} screen sl texstudio thefuck thunderbird tree vinagre vlc zsh
 #install_pkg ddd debootstrap
 bash install_quentier.sh "$distro" "$pkg_mgr"
 bash install_VMM.sh "$distro" "$pkg_mgr"

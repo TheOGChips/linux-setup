@@ -4,7 +4,7 @@ VIMRC="$HOME"/.vimrc
 pkg_mgr="$1"
 
 echo -e '\nInstalling Vim...'
-sudo "$pkg_mgr" -y install vim vim-fugitive
+sudo "$pkg_mgr" -y install vim{,-fugitive}
 
 echo -e '\nConfiguring Vim...'
 touch "$VIMRC"
