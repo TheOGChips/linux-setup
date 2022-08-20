@@ -13,6 +13,8 @@ zkbd
 
 # .zshrc
 echo >> "$ZSHRC"
+echo "setopt histignoredups" >> "$ZSHRC"
+echo >> "$ZSHRC"
 echo "source $ZPROFILE" >> "$ZSHRC"
 echo "source $ALIASES" >> "$ZSHRC"
 echo >> "$ZSHRC"
