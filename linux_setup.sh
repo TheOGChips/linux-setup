@@ -106,18 +106,17 @@ install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck th
 install_pkg vinagre vlc zsh
 #install_pkg ddd debootstrap
 bash install_quentier.sh "$distro" "$pkg_mgr"
-# TODO: Merge VMM install similar to Quentier
+bash install_VMM.sh "$distro" "$pkg_mgr"
 
 if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
     install_pkg mingw-w64 net-tools nixnote2 python2
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
-    bash install_VMM.sh
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    install_pkg gcc-c++ libomp libomp-devel virt-manager
+    install_pkg gcc-c++ libomp libomp-devel
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
@@ -126,7 +125,6 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
         then
         install_pkg python3
     fi
-    echo -e '\nNOTE: You might need to restart your machine in order for virt-manager to work as expected\n'
 fi
 
 # Start Quentier sync with Evernote (it will take awhile)
