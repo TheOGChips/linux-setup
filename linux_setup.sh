@@ -259,8 +259,16 @@ sudo ln -s /run/media /media
 
 if [ "$distro" = "$DEBIAN" ]
     then
-    # TODO: Add disabling of touchscreen in /usr/share/X11/xorg.conf.d/40-libinput.conf
-    firefox https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
+    # NOTE: Since a basic use of sed seems to not work after testing in a VM, this was an easier
+    #       solution than trying to make time to go through the sed documentation. I just don't
+    #       have time for that currently.
+    # src: https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
+    LIBINPUT=/usr/share/X11/xorg.conf.d/40-libinput.conf
+    sudo chmod o+w "$LIBINPUT"
+    sudo echo '        Option "Ignore" "on"' >> "$LIBINPUT"
+    sudo chmod o-w "$LIBINPUT"
+    echo -e "\nA line for disabling hardware components has been added to the end of $LIBINPUT." echo 'Cut and paste it inside the section block of hardware component you want to disable.' echo -e "$LIBINPUT will now open in Vim...\n"
+    konsole -e "sudo vim $LIBINPUT"
 fi
 
 if [ "$distro" = "$ROCKY" ]
