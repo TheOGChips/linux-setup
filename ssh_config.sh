@@ -10,23 +10,26 @@ ssh-keygen -b 4096 -t ed25519 -f "$SSH"/github
 echo -e 'Generating key for Gitlab...\n'
 ssh-keygen -b 4096 -t ed25519 -f "$SSH"/gitlab
 
-echo 'Host holley-physics' >> "$SSH_CONFIG"
+remote=TTU-Physics-ATHolley
+echo "Host $remote" >> "$SSH_CONFIG"
 echo '    HostName 149.149.18.14' >> "$SSH_CONFIG"
 echo '    Port 33138' >> "$SSH_CONFIG"
-echo "    IdentityFile $SSH/holley-physics" >> "$SSH_CONFIG"
+echo "    IdentityFile $SSH/$remote" >> "$SSH_CONFIG"
 echo -e 'Generating key for physics lab computer...\n'
-ssh-keygen -b 4096 -t ed25519 -f "$SSH"/holley-physics
+ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
 echo -e 'Copying public key to physics lab computer...\n'
-ssh-copy-id -i "$SSH"/holley-physics cswindell@holley-physics
+ssh-copy-id -i "$SSH"/"$remote" cswindell@"$remote"
 
-echo 'Host rpi4' >> "$SSH_CONFIG"
+remote=rpi4
+echo "Host $remote" >> "$SSH_CONFIG"
 echo '    HostName 10.10.100.101' >> "$SSH_CONFIG"
-echo "    IdentityFile $SSH/rpi4" >> "$SSH_CONFIG"
+echo "    IdentityFile $SSH/$remote" >> "$SSH_CONFIG"
 echo -e 'Generating key for Raspberry Pi 4...\n'
-ssh-keygen -b 4096 -t ed25519 -f "$SSH"/rpi4
+ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
 
-echo 'Host debian-vm'
+remote=debian-vm
+echo "Host $remote"
 echo '    HostName 192.168.122.224'
-echo "    IdentityFile $SSH/debian-vm"
+echo "    IdentityFile $SSH/$remote"
 echo -e 'Generating key for Debian VM...\n'
-ssh-keygen -b 4096 -t ed25519 -f "$SSH"/debian-vm
+ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
