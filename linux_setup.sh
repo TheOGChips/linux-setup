@@ -105,6 +105,8 @@ install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenre
 install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim
 install_pkg vinagre vlc zsh
 #install_pkg ddd debootstrap
+bash install_quentier.sh "$distro" "$pkg_mgr"
+# TODO: Merge VMM install similar to Quentier
 
 if [ "$distro" = "$DEBIAN" ]
     then
@@ -119,8 +121,7 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
-        install_pkg quentier #rstudio-desktop
-        # NOTE: Quentier might be a better option for Debian as well
+        #install_pkg #rstudio-desktop
     elif [ "$distro" = "$ROCKY" ]
         then
         install_pkg python3
@@ -128,12 +129,8 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     echo -e '\nNOTE: You might need to restart your machine in order for virt-manager to work as expected\n'
 fi
 
-# Start NixNote sync with Evernote on Debian (it will take awhile
-if [ "$distro" = "$DEBIAN" ]
-    then
-    nixnote2 &
-# TODO: Fedora: Don't know if Quentier will need the same yet
-fi
+# Start Quentier sync with Evernote (it will take awhile)
+quentier &
 
 # Create local binaries directory
 echo -e '\nCreating local app directories...\n'
