@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#TODO: Create SSH keys for Raspberry Pi 4
-
 SSH="$HOME"/.ssh
 SSH_CONFIG="$SSH"/config
 
