@@ -105,7 +105,7 @@ install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenre
 install_pkg racket-doc ruby ruby-doc screen sl vim-fugitive texstudio thefuck thunderbird tree vim
 install_pkg vinagre vlc zsh
 #install_pkg ddd debootstrap
-#TODO: Will need to fix virt-manager later (possibly look into qt-virt-manager)
+
 #TODO: Might need to install something else to get OpenMP to work with Clang
 if [ "$distro" = "$DEBIAN" ]
     then
@@ -126,6 +126,7 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
         then
         install_pkg python3
     fi
+    echo -e '\nNOTE: You might need to restart your machine in order for virt-manager to work as expected\n'
 fi
 
 # Start NixNote sync with Evernote on Debian (it will take awhile
