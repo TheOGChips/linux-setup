@@ -186,7 +186,9 @@ zsh install_OCaml.sh "$distro" "$pkg_mgr"
 echo "alias ocaml-top='ocaml-top &'" >> "$ALIASES"
 
 # Io install and setup
-bash "$LOCAL"/bin/update_Io.sh "$distro" "$pkg_mgr"
+script=install_Io.sh
+bash "$script" "$distro" "$pkg_mgr"
+echo "alias update-io='$PWD/$script $distro $pkg_mgr'" >> "$ALIASES"
 
 # TODO: Look into how to create a chroot jail (or how to use debootstrap, which surpisingly exists in Fedora's repos)
 # Alias for restarting chroot jail
