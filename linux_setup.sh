@@ -185,9 +185,8 @@ echo "alias arnoldc='bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh'" >> "$ALIASES
 zsh install_OCaml.sh "$distro" "$pkg_mgr"
 echo "alias ocaml-top='ocaml-top &'" >> "$ALIASES"
 
-# TODO: Still need to actually do this
 # Io install and setup
-bash update_Io.sh
+bash "$LOCAL"/bin/update_Io.sh "$distro" "$pkg_mgr"
 
 # TODO: Look into how to create a chroot jail (or how to use debootstrap, which surpisingly exists in Fedora's repos)
 # Alias for restarting chroot jail
