@@ -182,11 +182,8 @@ pip install numpy pandas matplotlib scipy ipython
 echo -e '\nInstalling ArnoldC...\n'
 echo "alias arnoldc='bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh'" >> "$ALIASES"
 
-# TODO: Still need to actually do this
-# TODO: Move this out of college_stuff and into $HOME/.local/bin?
-# OCaml install and setup
-# NOTE: Ensure Torchwood is mounted before running this line
-bash "$HOME"/Documents/college_stuff/7.\ Spring\ 2020/CSC\ 3710\ \(Foundations\ of\ Computer\ Science\)/OCaml\ Program/OCaml\ Setup/debian_ocaml_install.sh
+zsh install_OCaml.sh "$distro" "$pkg_mgr"
+echo "alias ocaml-top='ocaml-top &'" >> "$ALIASES"
 
 # TODO: Still need to actually do this
 # Io install and setup
