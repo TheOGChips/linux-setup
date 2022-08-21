@@ -190,9 +190,8 @@ script=install_Io.sh
 bash "$script" "$distro" "$pkg_mgr"
 echo "alias update-io='$PWD/$script $distro $pkg_mgr'" >> "$ALIASES"
 
-# TODO: Look into how to create a chroot jail (or how to use debootstrap, which surpisingly exists in Fedora's repos)
 # Alias for restarting chroot jail
-#echo "alias chroot-startup='zsh ~/Documents/linux_files/chroot_jail/chroot_startup.sh'" >> "$ALIASES"
+echo "alias chroot-startup='zsh ~/Documents/linux_files/chroot_jail/chroot_startup.sh'" >> "$ALIASES"
 
 # Configure Vim
 echo -e '\nConfiguring Vim...\n'
