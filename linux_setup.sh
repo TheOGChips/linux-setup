@@ -100,9 +100,10 @@ elif [ "$distro" = "$ROCKY" ]
 fi
 
 install_pkg clang clojure cmatrix dconf-editor dmg2img doxygen gimp{,-heif-plugin} gnote
-install_pkg gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku} make nasm
-install_pkg neofetch plank plasma-browser-integration python3-pip simplescreenrecorder
-install_pkg racket{,-doc} ruby{,-doc} screen sl texstudio thefuck thunderbird tree vinagre vlc zsh
+install_pkg gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku}
+install_pkg libreoffice-{writer,calc} make nasm neofetch plank plasma-browser-integration
+install_pkg python3-pip simplescreenrecorder racket{,-doc} ruby{,-doc} screen sl texstudio thefuck
+install_pkg thunderbird tree vinagre vlc zsh
 #install_pkg ddd debootstrap
 bash install_quentier.sh "$distro" "$pkg_mgr"
 bash install_VMM.sh "$distro" "$pkg_mgr"
