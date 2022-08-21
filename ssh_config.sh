@@ -31,3 +31,11 @@ echo '    HostName 192.168.122.224' >> "$SSH_CONFIG"
 echo "    IdentityFile $SSH/$remote" >> "$SSH_CONFIG"
 echo -e 'Generating key for Debian VM...\n'
 ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
+
+remote=debian_chroot
+echo "Host $remote" >> "$SSH_CONFIG"
+echo '    HostName localhost' >> "$SSH_CONFIG"
+echo '    Port 2222' >> "$SSH_CONFIG"
+echo "    IdentityFile $SSH/$remote" >> "$SSH_CONFIG"
+echo -e 'Generating key for physics lab computer...\n'
+ssh-keygen -b 4096 -t ed25519 -f "$SSH"/"$remote"
