@@ -207,6 +207,7 @@ echo "alias mpiclang='OMPI_CC=clang mpicc'" >> "$ALIASES"
 echo "alias mpiclang++='OMPI_CC=clang++ mpic++'" >> "$ALIASES"
 
 # Install Vivi (for screen sharing at school)
+script=install_vivi.sh
 if [ "$distro" = "$DEBIAN" ]
     then
     pkg_ext=deb
@@ -214,7 +215,8 @@ elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
     pkg_ext="$alt_pkg_mgr"
 fi
-bash install_vivi.sh "$distro" "$pkg_ext"
+bash "$script" "$distro" "$pkg_ext"
+echo "alias update-vivi='$PWD/$script $distro $pkg_ext'" >> "$ALIASES"
 
 # Install VMware Horizon Linux client
 bash install_vmware_horizon.sh
