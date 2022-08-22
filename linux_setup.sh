@@ -116,7 +116,7 @@ if [ "$distro" = "$DEBIAN" ]
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    install_pkg gcc-c++ libomp libomp-devel
+    install_pkg dnf-utils gcc-c++ libomp libomp-devel
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
