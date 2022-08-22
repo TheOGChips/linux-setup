@@ -111,12 +111,12 @@ bash install_VMM.sh "$distro" "$pkg_mgr"
 if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
-    install_pkg mingw-w64 net-tools python2
+    install_pkg libncurses-dev mingw-w64 net-tools python2
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    install_pkg dnf-utils gcc-c++ libomp libomp-devel
+    install_pkg dnf-utils gcc-c++ libomp libomp-devel ncurses-devel
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
