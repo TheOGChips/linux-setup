@@ -191,7 +191,7 @@ bash "$script" "$distro" "$pkg_mgr"
 echo "alias update-io='$PWD/$script $distro $pkg_mgr'" >> "$ALIASES"
 
 # Alias for restarting chroot jail
-echo "alias chroot-startup='zsh ~/Documents/linux_files/chroot_jail/chroot_startup.sh'" >> "$ALIASES"
+echo "alias chroot-startup='zsh ~/Documents/projects/chroot_jail/chroot_startup.sh'" >> "$ALIASES"
 
 # Configure Vim
 echo -e '\nConfiguring Vim...\n'
