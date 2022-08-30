@@ -99,18 +99,18 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-install_pkg blueman clang clojure cmatrix dconf-editor dmg2img doxygen gimp{,-heif-plugin}
-install_pkg gnote gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku}
-install_pkg libreoffice-{writer,calc} make nasm neofetch plank plasma-browser-integration
-install_pkg python3-pip simplescreenrecorder racket{,-doc} ruby{,-doc} screen sl texstudio thefuck
-install_pkg thunderbird tree vinagre vlc zsh
-#install_pkg ddd debootstrap
+install_pkg blueman clang clojure cmatrix dconf-editor debootstrap dmg2img doxygen
+install_pkg gimp{,-heif-plugin} gnote gprolog{,-docs} htop julia{,-doc} kate
+install_pkg k{mahjongg,nights,pat,sudoku} libreoffice-{writer,calc} make nasm neofetch
+install_pkg plank plasma-browser-integration python3-pip simplescreenrecorder racket{,-doc}
+install_pkg ruby{,-doc} screen sl texstudio thefuck thunderbird tree vinagre vlc zsh
+#install_pkg ddd
 bash install_quentier.sh "$distro" "$pkg_mgr"
 bash install_VMM.sh "$distro" "$pkg_mgr"
 
 if [ "$distro" = "$DEBIAN" ]
     then
-    install_pkg debootstrap default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
+    install_pkg default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
     install_pkg libncurses-dev mingw-w64 net-tools python2
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     #bash install_RStudio.sh
