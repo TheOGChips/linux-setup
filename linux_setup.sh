@@ -255,7 +255,7 @@ sudo rmdir /media
 sudo ln -s /run/media /media
 
 # Setup WINE
-#wine_install_and_setup.sh
+bash wine_install_and_setup.sh
 
 if [ "$distro" = "$DEBIAN" ]
     then
