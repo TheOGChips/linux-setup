@@ -99,11 +99,11 @@ elif [ "$distro" = "$ROCKY" ]
     install_pkg epel-release
 fi
 
-install_pkg blueman clang clojure cmatrix dconf-editor debootstrap dmg2img doxygen
-install_pkg gimp{,-heif-plugin} gnote gprolog{,-docs} htop julia{,-doc} kate
-install_pkg k{mahjongg,nights,pat,sudoku} libreoffice-{writer,calc} make nasm neofetch
-install_pkg plank plasma-browser-integration python3-pip simplescreenrecorder racket{,-doc}
-install_pkg ruby{,-doc} screen sl texstudio thefuck thunderbird tree vinagre vlc zsh
+install_pkg blueman clang clojure cmatrix dconf-editor debootstrap dmg2img doxygen gimp{,-heif-plugin}
+install_pkg gnote gprolog{,-docs} htop julia{,-doc} kate k{mahjongg,nights,pat,sudoku}
+install_pkg libreoffice-{writer,calc} make nasm neofetch plank ruby{,-doc} plasma-browser-integration
+install_pkg python3-pip simplescreenrecorder racket{,-doc} screen sl texstudio thefuck thunderbird tree
+install_pkg vinagre vlc zsh
 #install_pkg ddd
 bash install_quentier.sh "$distro" "$pkg_mgr"
 bash install_VMM.sh "$distro" "$pkg_mgr"
@@ -111,12 +111,12 @@ bash install_VMM.sh "$distro" "$pkg_mgr"
 if [ "$distro" = "$DEBIAN" ]
     then
     install_pkg default-jdk dos2unix ffmpeg firmware-misc-nonfree g++ libheif-examples
-    install_pkg libncurses-dev mingw-w64 net-tools python2
+    install_pkg lib{ncurses,opencv}-dev mingw-w64 net-tools python2
     install_pkg texlive texlive-latex-extra texlive-latex-extra-doc     # LaTeX
     #bash install_RStudio.sh
 elif [ "$distro" = "$FEDORA" -o "$distro" = "$ROCKY" ]
     then
-    install_pkg dnf-utils gcc-c++ libomp libomp-devel ncurses-devel
+    install_pkg dnf-utils gcc-c++ {libomp,ncurses,opencv}-devel
     if [ "$distro" = "$FEDORA" ]
         then
         install_pkg ffmpeg-free java-latest-openjdk libheif mingw{32,64}-gcc-c++ python2.7
