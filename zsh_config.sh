@@ -51,6 +51,16 @@ echo 'BF="%B%F"' >> "$ZPROFILE"
 echo 'bf="%f%b"' >> "$ZPROFILE"
 echo 'export PS1="[ $BF{green}%n$bf$BF{yellow}@$bf$BF{magenta}%m$bf: $BF{blue}%~ $bf] $ "' >> "$ZPROFILE"
 #echo 'export HISTCONTROL=ignoreboth:erasedups' >> "$ZPROFILE"
+### Add local directories to C/C++ compiler paths
+echo -e '\nAdding local paths to C/C++ compiler search paths...\n'
+sleep "$READING_TIME"
+INCLUDE="$HOME"/.local/include
+echo >> "$ZPROFILE"
+echo "C_INCLUDE_PATH=$INCLUDE:\$C_INCLUDE_PATH" >> "$ZPROFILE"
+echo "CPLUS_INCLUDE_PATH=$INCLUDE:\$CPLUS_INCLUDE_PATH" >> "$ZPROFILE"
+echo 'export C_INCLUDE_PATH' >> "$ZPROFILE"
+echo 'export CPLUS_INCLUDE_PATH' >> "$ZPROFILE"
+echo >> "$ZPROFILE"
 
 # .zshenv
 echo 'if [ -d /opt/local/sbin ]' >> "$ZSHENV"

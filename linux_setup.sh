@@ -142,19 +142,6 @@ echo -e '\nInstalling and configuring Git...\n'
 sleep "$READING_TIME"
 bash git_config.sh "$pkg_mgr"
 
-# Add local directories to C/C++ compiler paths
-echo -e '\nAdding local paths to C/C++ compiler search paths...\n'
-sleep "$READING_TIME"
-PROFILE="$HOME"/.profile
-mkdir "$PROFILE"
-INCLUDE="$HOME"/.local/include
-echo >> "$PROFILE"
-echo "C_INCLUDE_PATH=$INCLUDE:$C_INCLUDE_PATH" >> "$PROFILE"
-echo "CPLUS_INCLUDE_PATH=$INCLUDE:$CPLUS_INCLUDE_PATH" >> "$PROFILE"
-echo 'export C_INCLUDE_PATH' >> "$PROFILE"
-echo 'export CPLUS_INCLUDE_PATH' >> "$PROFILE"
-echo >> "$PROFILE"
-
 #TODO: Installing stuff for the Raspberry Pi cluster
 # Setup access to the Raspberry Pi cluster
 #bash cluster_access_setup/node_ssh_aliases_setup.sh
