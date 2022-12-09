@@ -67,6 +67,11 @@
     become_user: chris
     ansible.builtin.command:
       cmd: bash nano_config.sh
+      
+  - name: Configuring SSH
+    become_user: chris
+    ansible.builtin.command:
+      cmd: konsole -e 'bash ssh_config.sh'
     
 # Play for configuring Git
 - name: Configuring Git
