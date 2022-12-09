@@ -1,0 +1,110 @@
+# run using ansible-playbook -K init.yml
+---
+# The general play
+- name: Complete initial setup of localhost
+  hosts: localhost
+  connection: local
+  become: yes
+  #become_method: sudo
+  #vars_files:
+  #- vars/main.yml
+
+  #roles:
+  #- role: geerlingguy.apache
+
+  tasks:
+  - name: Remove unwanted KDE packages
+    ansible.builtin.apt:
+      name: akregator,kmail,kmousetool,kmouth,kwrite,dragonplayer,knotes,konqueror,kontrast,termit
+      state: absent
+      
+  - name: Remove these packages manually
+    ansible.builtin.shell:
+      cmd: rm -r $(find / -name '*contactthemeeditor*' -o -name '*contactprintthemeeditor*' -o -name '*headerthemeeditor*' -o -name '*pimdataexporter*' -o -name '*sieveeditor*') || /bin/true
+      warn: false
+      
+      #ignore_errors: true
+    #ansible.builtin.copy:
+      #src: files/site/index.html
+      #dest: /var/www/html/index.html
+      #owner: root
+      #group: root
+      #mode: 0644
+  - name: Upgrade current packages on machine
+    ansible.builtin.apt:
+      upgrade: safe
+      
+  - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
+    become_user: chris
+    #ansible.builtin.command:
+      #cmd: sed -i 's;</gui>;  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>;' ~/.local/share/kxmlgui5/okular/shell.rc
+    ansible.builtin.replace:
+      path: ~/.local/share/kxmlgui5/okular/shell.rc
+      regexp: '</gui>' # NOTE: This might need to be </kpartgui>
+      replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
+      
+  - name: Install net-tools
+    ansible.builtin.apt:
+      name: net-tools
+      state: latest
+      
+  - name: Make edits to /etc/sudoers
+    become_user: chris
+    ansible.builtin.command:
+      cmd: konsole -e 'bash visudo_edits.sh apt dpkg $HOME/.aliases'
+      
+  - name: Removing GRUB menu timeout
+    ansible.builtin.replace:
+      path: /etc/default/grub
+      regexp: 'GRUB_TIMEOUT=5'
+      replace: 'GRUB_TIMEOUT=-1'
+      
+  - name: Updating GRUB
+    ansible.builtin.command:
+      cmd: update-grub
+      
+  - name: Configuring Nano
+    become_user: chris
+    ansible.builtin.command:
+      cmd: bash nano_config.sh
+    
+# Play for configuring Git
+- name: Configuring Git
+  hosts: localhost
+  connection: local
+  
+  tasks:
+  - name: Installing Git
+    become: yes
+    ansible.builtin.apt:
+      name: git
+      state: latest
+      
+  - name: Setting Username
+    ansible.builtin.command:
+      cmd: git config --global user.name "TheOGChips"
+      
+  - name: Setting E-mail
+    ansible.builtin.command:
+      cmd: git config --global user.email "swindell.christian.g@gmail.com"
+      
+  - name: Setting Credential Helper
+    ansible.builtin.command:
+      cmd: git config --global credential.helper store
+      
+  - name: Setting SSH key
+    ansible.builtin.command:
+      cmd: git config --global core.sshCommand "ssh -i ~/.ssh/github -F /dev/null"
+      
+# Play for debugging stuff
+- name: Debugging stuff
+  hosts: localhost
+  connection: local
+  #become_user: chris
+  
+  tasks:
+  - name: 'DEBUGGING: Removing aliases file'
+    #become_user: chris
+    ansible.builtin.file:
+      name: /home/chris/.aliases
+      state: absent
