@@ -34,15 +34,6 @@
     ansible.builtin.apt:
       upgrade: safe
       
-  - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
-    become_user: chris
-    #ansible.builtin.command:
-      #cmd: sed -i 's;</gui>;  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>;' ~/.local/share/kxmlgui5/okular/shell.rc
-    ansible.builtin.replace:
-      path: ~/.local/share/kxmlgui5/okular/shell.rc
-      regexp: '</gui>' # NOTE: This might need to be </kpartgui>
-      replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
-      
   - name: Install net-tools
     ansible.builtin.apt:
       name: net-tools
@@ -63,13 +54,23 @@
     ansible.builtin.command:
       cmd: update-grub
       
+# Play for user program configuations
+- name: Configuring user programs
+  hosts: localhost
+  connection: local
+  
+  tasks:
+  - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
+    ansible.builtin.replace:
+      path: ~/.local/share/kxmlgui5/okular/shell.rc
+      regexp: '</gui>' # NOTE: This might need to be </kpartgui>
+      replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
+      
   - name: Configuring Nano
-    become_user: chris
     ansible.builtin.command:
       cmd: bash nano_config.sh
       
   - name: Configuring SSH
-    become_user: chris
     ansible.builtin.command:
       cmd: konsole -e 'bash ssh_config.sh'
     
