@@ -24,18 +24,21 @@
       state: absent
       
   - name: Remove these packages manually
-    check_mode: off
-    ignore_errors: true
-    ansible.builtin.shell:
-      cmd: rm -r $(find / -name "{{ item }}") #|| /bin/true
-      warn: false
-    #ignore_errors: true
-    loop:
-      - '*contactthemeeditor*'
-      - '*contactprintthemeeditor*'
-      - '*headerthemeeditor*'
-      - '*pimdataexporter*'
-      - '*sieveeditor*'
+    block:
+      - name: Attempting to remove packages
+        ansible.builtin.shell:
+          cmd: rm -r $(find / -name "{{ item }}")
+          warn: false
+        loop:
+          - '*contactthemeeditor*'
+          - '*contactprintthemeeditor*'
+          - '*headerthemeeditor*'
+          - '*pimdataexporter*'
+          - '*sieveeditor*'
+    rescue:
+      - name: Files couldn't be found
+        ansible.builtin.debug:
+          msg: The files could not be found and have likely already been deleted'
       
       #ignore_errors: true
     #ansible.builtin.copy:
