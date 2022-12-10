@@ -1,10 +1,14 @@
 # run using ansible-playbook -K init.yml
 ---
 # The general play
+# echo "alias su='sudo su'" >> "$HOME"/.aliases
+
 - name: Complete initial setup of localhost
   hosts: localhost
   connection: local
   become: yes
+  vars_files:
+    - install_packages.yml
   #become_method: sudo
   #vars_files:
   #- vars/main.yml
@@ -14,14 +18,24 @@
 
   tasks:
   - name: Remove unwanted KDE packages
+    check_mode: on
     ansible.builtin.apt:
-      name: akregator,kmail,kmousetool,kmouth,kwrite,dragonplayer,knotes,konqueror,kontrast,termit
+      name: "{{ pkgs_to_remove + pkgs_to_remove_from_debian }}"
       state: absent
       
   - name: Remove these packages manually
+    check_mode: off
+    ignore_errors: true
     ansible.builtin.shell:
-      cmd: rm -r $(find / -name '*contactthemeeditor*' -o -name '*contactprintthemeeditor*' -o -name '*headerthemeeditor*' -o -name '*pimdataexporter*' -o -name '*sieveeditor*') || /bin/true
+      cmd: rm -r $(find / -name "{{ item }}") #|| /bin/true
       warn: false
+    #ignore_errors: true
+    loop:
+      - '*contactthemeeditor*'
+      - '*contactprintthemeeditor*'
+      - '*headerthemeeditor*'
+      - '*pimdataexporter*'
+      - '*sieveeditor*'
       
       #ignore_errors: true
     #ansible.builtin.copy:
@@ -53,6 +67,36 @@
   - name: Updating GRUB
     ansible.builtin.command:
       cmd: update-grub
+    # echo "alias update-grub='sudo grub2-mkconfig -o /boot/grub2/grub.cfg'" >> "$ALIASES"
+      
+  - name: Installing packages
+    check_mode: on
+    ansible.builtin.apt:
+      #name: "{{ pkgs_to_install }}"
+      name: "{{ item }}"
+      state: present
+    loop: "{{ pkgs_to_install }}"
+      
+      
+  #- name: Installing packages p2
+    #ansible.builtin.apt:
+      #name: gprolog{,-doc},htop,julia{,-doc},kate,k{mahjongg,nights,pat,sudoku}
+      #state: present
+      
+  #- name: Installing packages p3
+    #ansible.builtin.apt:
+      #name: libreoffice-{writer,calc,impress},make,nasm,neofetch,plank,ruby,plasma-browser-integration
+      #state: present
+      
+  #- name: Installing packages p4
+    #ansible.builtin.apt:
+      #name: python3-pip,racket{,-doc},screen,simplescreenrecorder,sl,texstudio,thefuck,thunderbird,tree
+      #state: present
+      
+  #- name: Installing packages p5
+    #ansible.builtin.apt:
+      #name: vinagre,vlc,zsh
+      #state: present
       
 # Play for user program configuations
 - name: Configuring user programs

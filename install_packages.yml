@@ -1,0 +1,41 @@
+---
+pkgs_to_remove:
+  - akregator
+  - kmail
+  - kmousetool
+  - kmouth
+  - kwrite
+  
+pkgs_to_remove_from_debian:
+  - dragonplayer
+  - knotes
+  - konqueror
+  - kontrast
+  - termit
+
+pkgs_to_remove_from_redhat_distros:
+  - akonadi-import-wizard
+  - dragon
+  - kgpg
+  - kmines
+  - krdc
+  - krfb
+  - kolourpaint
+  - konversation
+
+pkgs_to_remove_fedora:
+  - elisa-player
+
+pkgs_to_remove_rocky:
+  - kcolorchooser
+
+pkgs_to_install:
+  - clang
+  - clojure
+  - cmatrix
+  - dconf-editor
+  - debootstrap
+  - dmg2img
+  - doxygen
+  - gimp
+  - gnote
