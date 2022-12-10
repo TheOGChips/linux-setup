@@ -8,6 +8,7 @@
   connection: local
   become: yes
   vars_files:
+    - pkgs_to_remove.yml
     - pkgs_to_install.yml
   #become_method: sudo
   #vars_files:
@@ -82,6 +83,15 @@
     
   # NOTE: Place code for installing RStudio here (if needed)
       
+  - name: Installing Quentier
+    check_mode: on
+    ansible.builtin.command:
+      cmd: konsole -e 'bash install_quentier.sh "debian bullseye" apt'
+      
+  - name: Starting Quentier sync with Evernote
+    check_mode: on
+    ansible.builtin.command:
+      cmd: konsole -e 'quentier &'
       
   #- name: Installing packages p2
     #ansible.builtin.apt:
