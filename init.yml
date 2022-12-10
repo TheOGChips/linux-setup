@@ -8,7 +8,7 @@
   connection: local
   become: yes
   vars_files:
-    - install_packages.yml
+    - pkgs_to_install.yml
   #become_method: sudo
   #vars_files:
   #- vars/main.yml
@@ -79,6 +79,8 @@
       #name: "{{ item }}"
       state: present
     #loop: "{{ pkgs_to_install }}"
+    
+  # NOTE: Place code for installing RStudio here (if needed)
       
       
   #- name: Installing packages p2
@@ -118,6 +120,7 @@
   - name: Configuring Nano
     include_tasks: nano_config.yml
       
+  # NOTE: This might need to be it's own playbook included here somehow
   - name: Configuring SSH
     ansible.builtin.command:
       cmd: konsole -e 'bash ssh_config.sh'

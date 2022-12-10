@@ -1,0 +1,118 @@
+---
+pkgs_to_remove:
+  - akregator
+  - kmail
+  - kmousetool
+  - kmouth
+  - kwrite
+  
+pkgs_to_remove_from_debian:
+  - dragonplayer
+  - knotes
+  - konqueror
+  - kontrast
+  - termit
+
+pkgs_to_remove_from_redhat_distros:
+  - akonadi-import-wizard
+  - dragon
+  - kgpg
+  - kmines
+  - krdc
+  - krfb
+  - kolourpaint
+  - konversation
+
+pkgs_to_remove_fedora:
+  - elisa-player
+
+pkgs_to_remove_rocky:
+  - kcolorchooser
+
+pkgs_to_install:
+  - clang
+  - clojure
+  - cmatrix
+  - dconf-editor
+  #- ddd
+  - debootstrap
+  - dmg2img
+  - doxygen
+  - gimp
+  - gnote
+  - gprolog
+  - htop
+  - julia
+  - julia-doc
+  - kate
+  - kmahjongg
+  - knights
+  - kpat
+  - ksudoku
+  - make
+  - nasm
+  - neofetch
+  - plank
+  - plasma-browser-integration
+  - python3-pip
+  - simplescreenrecorder
+  - racket
+  - racket-doc
+  - ruby
+  - screen
+  - sl
+  - texstudio
+  - thefuck
+  - thunderbird
+  - tree
+  - vinagre
+  - vlc
+  - zsh
+   
+pkgs_to_install_for_debian:
+  - default-jdk
+  - dos2unix
+  - ffmpeg
+  - firmware-misc-nonfree
+  - gprolog-doc
+  - g++
+  - libheif-examples
+  - libncurses-dev
+  - libopencv-dev
+  - mingw-w64
+  - net-tools
+  #- python2
+  - texlive
+  - texlive-latex-extra
+  - texlive-latex-extra-doc
+  
+pkgs_to_install_for_redhat_distros:
+  - dnf-utils
+  - gcc-c++
+  - gimp-heif-plugin
+  - gprolog-docs
+  - libomp-devel
+  - ncurses-devel
+  - opencv-devel
+  - ruby-doc
+  
+pkgs_to_install_for_fedora:
+  - ffmpeg-free
+  - java-latest-openjdk
+  - libheif
+  - mingw32-gcc-c++
+  - mingw64-gcc-c++
+  #- python2.7
+  #- rstudio-desktop
+  
+pkgs_to_install_for_rocky:
+  - rpmfusion-free-release
+  - fuse-exfat
+  - exfatprogs
+  #- exfat-utils
+  - epel-release
+  - libreoffice-writer
+  - libreoffice-calc
+  - libreoffice-impress
+  - python3
+ 
