@@ -93,6 +93,11 @@
     ansible.builtin.command:
       cmd: konsole -e 'quentier &'
       
+  - name: Configuring VMM (Virtual Machine Manager)
+    check_mode: on
+    ansible.builtin.command:
+      cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
+      
   #- name: Installing packages p2
     #ansible.builtin.apt:
       #name: gprolog{,-doc},htop,julia{,-doc},kate,k{mahjongg,nights,pat,sudoku}
