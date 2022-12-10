@@ -1,0 +1,12 @@
+---
+nano_config_options:
+  - 'set autoindent'
+  - 'set linenumbers'
+  - 'set smarthome'
+  - 'set tabsize 4'
+  - 'set tabstospaces'
+  - 'set numbercolor brightcyan'
+  - 'set titlecolor brightyellow'
+  - 'set functioncolor blue'
+  - 'set keycolor brightwhite'
+  - 'include "/usr/share/nano/*.nanorc"'

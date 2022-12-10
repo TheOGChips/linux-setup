@@ -75,10 +75,10 @@
   - name: Installing packages
     check_mode: on
     ansible.builtin.apt:
-      #name: "{{ pkgs_to_install }}"
-      name: "{{ item }}"
+      name: "{{ pkgs_to_install }}"
+      #name: "{{ item }}"
       state: present
-    loop: "{{ pkgs_to_install }}"
+    #loop: "{{ pkgs_to_install }}"
       
       
   #- name: Installing packages p2
@@ -105,6 +105,8 @@
 - name: Configuring user programs
   hosts: localhost
   connection: local
+  vars_files:
+    - nano_config_options.yml
   
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -114,8 +116,7 @@
       replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
       
   - name: Configuring Nano
-    ansible.builtin.command:
-      cmd: bash nano_config.sh
+    include_tasks: nano_config.yml
       
   - name: Configuring SSH
     ansible.builtin.command:

@@ -1,0 +1,9 @@
+---
+- name: 'NANO CONFIG: Writing first line'
+  ansible.builtin.shell:
+    cmd: echo '{{ nano_config_options[0] }}' > $HOME/.nanorc
+    
+- name: 'NANO CONFIG: Writing middle lines'
+  ansible.builtin.shell:
+    cmd: echo '{{ item }}' >> $HOME/.nanorc
+  loop: "{{ nano_config_options[1:] }}"
