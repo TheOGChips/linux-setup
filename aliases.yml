@@ -8,6 +8,9 @@ aliases: {
           'dpkg': 'sudo dpkg',
           'arp': 'sudo arp',
           'poweroff': 'sudo poweroff',
-          'reboot': 'sudo reboot',
-          #'update-grub': 'sudo grub2-mkconfig -o /boot/grub2/grub.cfg' # TODO: Put this in redhat aliases file
+          'reboot': 'sudo reboot'
          }
+         
+aliases_redhat_distros: {
+                         'update-grub': 'sudo grub2-mkconfig -o /boot/grub2/grub.cfg'
+                        }
