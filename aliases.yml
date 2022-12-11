@@ -1,0 +1,13 @@
+---
+aliases_file: "{{ lookup('ansible.builtin.env', 'HOME') }}/.aliases"
+    # echo "alias =" >> "$ALIASES"
+
+aliases: {
+          'su': 'sudo su',
+          'apt': 'sudo apt',
+          'dpkg': 'sudo dpkg',
+          'arp': 'sudo arp',
+          'poweroff': 'sudo poweroff',
+          'reboot': 'sudo reboot',
+          #'update-grub': 'sudo grub2-mkconfig -o /boot/grub2/grub.cfg' # TODO: Put this in redhat aliases file
+         }

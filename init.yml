@@ -1,7 +1,6 @@
 # run using ansible-playbook -K init.yml
 ---
 # The general play
-# echo "alias su='sudo su'" >> "$HOME"/.aliases
 
 - name: Complete initial setup of localhost
   hosts: localhost
@@ -71,7 +70,6 @@
   - name: Updating GRUB
     ansible.builtin.command:
       cmd: update-grub
-    # echo "alias update-grub='sudo grub2-mkconfig -o /boot/grub2/grub.cfg'" >> "$ALIASES"
       
   - name: Installing packages
     check_mode: on
@@ -98,8 +96,18 @@
     ansible.builtin.command:
       cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
       
-  # TODO: Make list for aliases (currently, the only ones added are from visudo_edits.sh)
-  #- name: 
+# Play for creating shell aliases
+- name: Creating shell aliases
+  hosts: localhost
+  connection: local
+  vars_files:
+    - aliases.yml
+    
+  tasks:
+    - name: Writing aliases to "{{ aliases_file }}"
+      ansible.builtin.shell:
+        cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
+      loop: "{{ aliases | dict2items }}"
       
 # Play for user program configuations
 - name: Configuring user programs
@@ -124,6 +132,7 @@
       cmd: konsole -e 'bash ssh_config.sh'
     
 # Play for configuring Git
+# TODO: Put this in its own YAML file
 - name: Configuring Git
   hosts: localhost
   connection: local
@@ -155,17 +164,19 @@
 - name: Debugging stuff
   hosts: localhost
   connection: local
-  become_user: chris
+  vars_files:
+    - aliases.yml
+    - nano_config_options.yml
   
   tasks:
-  - name: 'DEBUGGING: Removing aliases file'
+  - name: 'DEBUGGING: Removing {{ aliases_file }}'
     check_mode: off
     ansible.builtin.file:
-      name: $HOME/.aliases
+      name: '{{ aliases_file }}'
       state: absent
       
-  - name: 'DEBUGGING: Removing $HOME/.nanorc'
+  - name: 'DEBUGGING: Removing {{ NANORC }}'
     check_mode: off
     ansible.builtin.file:
-      name: $HOME/.nanorc
+      name: '{{ NANORC }}'
       state: absent
