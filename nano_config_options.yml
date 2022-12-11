@@ -1,4 +1,6 @@
 ---
+NANORC: "{{ lookup('ansible.builtin.env', 'HOME') }}/.nanorc"
+
 nano_config_options:
   - 'set autoindent'
   - 'set linenumbers'
