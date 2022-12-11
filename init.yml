@@ -59,7 +59,7 @@
   - name: Make edits to /etc/sudoers
     become_user: chris
     ansible.builtin.command:
-      cmd: konsole -e 'bash visudo_edits.sh apt dpkg $HOME/.aliases'
+      cmd: konsole -e 'bash visudo_edits.sh apt dpkg'
       
   - name: Removing GRUB menu timeout
     ansible.builtin.replace:
@@ -80,7 +80,7 @@
     #loop: "{{ pkgs_to_install }}"
     
   # NOTE: Place code for installing RStudio here (if needed)
-      
+  # TODO: Place Quentier stuff into separate play
   - name: Installing Quentier
     check_mode: on
     ansible.builtin.command:
