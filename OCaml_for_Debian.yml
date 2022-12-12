@@ -6,15 +6,22 @@
 ###I had to use this one time because a switch wasn't created when I ran opam init (haven't had that problem before or since, though)
 ###opam switch create ocaml-base-compiler
 
-- name: Initializing OPAM
-  check_mode: on
-  ansible.builtin.command:
-    cmd: opam init
+- name: OCaml installation
+  hosts: localhost
+  connection: local
+  vars_files:
+    - pkgs_to_install.yml
+
+  tasks:
+  - name: Initializing OPAM
+    check_mode: on
+    ansible.builtin.command:
+      cmd: opam init
   
-- name: Installing opam packages
-  check_mode: on
-  ansible.builtin.command:
-    cmd: opam install {{ item }}
-  loop: '{{ pkgs_to_install_from_opam + pkgs_to_install_from_opam_for_debian }}'
+  - name: Installing opam packages
+    check_mode: on
+    ansible.builtin.command:
+      cmd: opam install {{ item }}
+    loop: '{{ pkgs_to_install_from_opam + pkgs_to_install_from_opam_for_debian }}'
   
 # NOTE: ocaml-top needs to be run from the command line (i.e. "$ ocaml-top")

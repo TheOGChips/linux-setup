@@ -6,30 +6,36 @@
 ###I had to use this one time because a switch wasn't created when I ran opam init (haven't had that problem before or since, though)
 ###opam switch create ocaml-base-compiler
 
-- name: Initializing OPAM
-  check_mode: on
-  ansible.builtin.command:
-    cmd: opam init
+- name: OCaml installation
+  hosts: localhost
+  connection: local
+  vars_files:
+    - pkgs_to_install.yml
     
-- name: Starting OPAM environment
-  check_mode: on
-  ansible.builtin.shell:
-    cmd: eval $(opam env --switch=default)
-  
-- name: Installing OPAM packages
-  check_mode: on
-  ansible.builtin.command:
-    cmd: opam install {{ item }}
-  loop: '{{ pkgs_to_install_from_opam + pkgs_to_install_from_opam_for_redhat_distros }}'
-  
-- name: Running OPAM user setup
-  check_mode: on
-  ansible.builtin.command:
-    cmd: opam user-setup install
+  - name: Initializing OPAM
+    check_mode: on
+    ansible.builtin.command:
+      cmd: opam init
     
-- name: Finalizing OPAM environment
-  check_mode: on
-  ansible.builtin.shell:
-    cmd: eval $(opam env)
+  - name: Starting OPAM environment
+    check_mode: on
+    ansible.builtin.shell:
+      cmd: eval $(opam env --switch=default)
+  
+  - name: Installing OPAM packages
+    check_mode: on
+    ansible.builtin.command:
+      cmd: opam install {{ item }}
+    loop: '{{ pkgs_to_install_from_opam + pkgs_to_install_from_opam_for_redhat_distros }}'
+  
+  - name: Running OPAM user setup
+    check_mode: on
+    ansible.builtin.command:
+      cmd: opam user-setup install
+    
+  - name: Finalizing OPAM environment
+    check_mode: on
+    ansible.builtin.shell:
+      cmd: eval $(opam env)
   
 # NOTE: ocaml-top needs to be run from the command line (i.e. "$ ocaml-top")

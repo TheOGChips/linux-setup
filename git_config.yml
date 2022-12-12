@@ -1,11 +1,18 @@
 ---
-- name: 'GIT CONFIG: Installing Git'
-  become: yes
-  ansible.builtin.apt:
-    name: git
-    state: latest
+- name: Configuring Git
+  hosts: localhost
+  connection: local
+  vars_files:
+    - git_config_options.yml
+  
+  tasks:
+  - name: 'GIT CONFIG: Installing Git'
+    become: yes
+    ansible.builtin.apt:
+      name: git
+      state: latest
 
-- name: 'GIT CONFIG: Configuring global Git settings'
-  ansible.builtin.command:
-    cmd: git config --global {{ item.key }} "{{ item.value }}"
-  loop: "{{ git_config_options | dict2items }}"
+  - name: 'GIT CONFIG: Configuring global Git settings'
+    ansible.builtin.command:
+      cmd: git config --global {{ item.key }} "{{ item.value }}"
+    loop: "{{ git_config_options | dict2items }}"

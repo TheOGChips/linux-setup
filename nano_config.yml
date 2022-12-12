@@ -1,5 +1,12 @@
 ---
-- name: 'NANO CONFIG: Writing to {{ NANORC }}'
-  ansible.builtin.command:
-    cmd: echo '{{ item }}' >> '{{ NANORC }}'
-  loop: "{{ nano_config_options }}"
+- name: Configuring Nano
+  hosts: localhost
+  connection: local
+  vars_files:
+    - nano_config_options.yml
+  
+  tasks:
+  - name: 'NANO CONFIG: Writing to {{ NANORC }}'
+    ansible.builtin.command:
+      cmd: echo '{{ item }}' >> '{{ NANORC }}'
+    loop: "{{ nano_config_options }}"

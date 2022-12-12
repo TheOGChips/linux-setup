@@ -1,21 +1,28 @@
 ---
-- name: Generating SSH keys
-  check_mode: on
-  ansible.builtin.command:
-    cmd: ssh-keygen -b 4096 -t ed25519 -f {{ ssh }}/{{ item }}
-  loop: '{{ key_names }}'
+- name: Configuring SSH
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ssh_config_vars.yml
   
-- name: Copying SSH config file to {{ ssh }}
-  block:
-    - name: Attempting to copy SSH config file to {{ ssh }}
-      ansible.builtin.copy:
-        src: ssh_config.txt
-        dest: '{{ ssh_config }}'
-  rescue:
-    - name: SSH config file not found
-      ansible.builtin.debug:
-        msg: SSH config file not found and could not be copied. You'll have to create it manually.
+  tasks:
+  - name: Generating SSH keys
+    check_mode: on
+    ansible.builtin.command:
+      cmd: ssh-keygen -b 4096 -t ed25519 -f {{ ssh }}/{{ item }}
+    loop: '{{ key_names }}'
+  
+  - name: Copying SSH config file to {{ ssh }}
+    block:
+      - name: Attempting to copy SSH config file to {{ ssh }}
+        ansible.builtin.copy:
+          src: ssh_config.txt
+          dest: '{{ ssh_config }}'
+    rescue:
+      - name: SSH config file not found
+        ansible.builtin.debug:
+          msg: SSH config file not found and could not be copied. You'll have to create it manually.
     
-- name: Copying SSH key to {{ key_names[2] }}
-  ansible.builtin.command:
-    cmd: ssh-copy-id -i {{ ssh }}/{{ key_names[2] }} cswindell@{{ key_names[2] }}
+  - name: Copying SSH key to {{ key_names[2] }}
+    ansible.builtin.command:
+      cmd: ssh-copy-id -i {{ ssh }}/{{ key_names[2] }} cswindell@{{ key_names[2] }}

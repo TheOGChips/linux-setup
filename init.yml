@@ -86,12 +86,7 @@
   hosts: localhost
   connection: local
   vars_files:
-    - nano_config_options.yml
-    - git_config_options.yml
-    - ssh_config_vars.yml
-    - local_dirs.yml
     - pkgs_to_install.yml
-    #- Io_vars.yml
 
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -99,26 +94,11 @@
       path: ~/.local/share/kxmlgui5/okular/shell.rc
       regexp: '</gui>' # NOTE: This might need to be </kpartgui>
       replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
-      
-  - name: Configuring Nano
-    include_tasks: nano_config.yml
-      
-  - name: Configuring SSH
-    include_tasks: ssh_config.yml
-    
-  - name: Configuring Git
-    include_tasks: git_config.yml
-    
-  - name: Setting up local app environment
-    include_tasks: local.yml
     
   - name: Installing JFLAP
     ansible.builtin.get_url:
       url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
       dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
-      
-  - name: Quentier setup
-    include_tasks: quentier.yml
       
   - name: Configuring VMM (Virtual Machine Manager)
     check_mode: on
@@ -130,6 +110,11 @@
     ansible.builtin.pip:
       name: '{{ pkgs_to_install_from_pip }}'
       
+- ansible.builtin.import_playbook: nano_config.yml
+- ansible.builtin.import_playbook: ssh_config.yml
+- ansible.builtin.import_playbook: git_config.yml
+- ansible.builtin.import_playbook: local.yml
+- ansible.builtin.import_playbook: quentier.yml
 - ansible.builtin.import_playbook: OCaml_for_Debian.yml
 - ansible.builtin.import_playbook: Io.yml
       
