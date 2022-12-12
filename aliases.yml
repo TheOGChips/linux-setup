@@ -15,7 +15,9 @@ aliases: {
           'win32gcc': 'i686-w64-mingw32-gcc --static',      # for 32-bit Windows
           'arnoldc': '$SHELL $HOME/.local/bin/ArnoldC/run_arnoldc.sh',
           'ocaml-top': 'ocaml-top &',
-          'chroot-startup': '$SHELL ~/Documents/projects/chroot_jail/chroot_startup.sh'
+          'chroot-startup': '$SHELL ~/Documents/projects/chroot_jail/chroot_startup.sh',
+          'mpiclang': 'OMPI_CC=clang mpicc',
+          'mpiclang++': 'OMPI_CC=clang++ mpic++'
          }
          
 aliases_redhat_distros: {

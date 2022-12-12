@@ -59,6 +59,8 @@ pkgs_to_install_for_debian:
   - mingw-w64
   - net-tools
   #- python2
+  
+  # LaTeX
   - texlive
   - texlive-latex-extra
   - texlive-latex-extra-doc
@@ -68,6 +70,13 @@ pkgs_to_install_for_debian:
   - rlwrap
   - bubblewrap
   - libgtksourceview2.0-dev # needed for ocaml-top
+  
+  # OpenMPI
+  - openmpi-bin
+  - openmpi-common
+  - libopenmpi3
+  - libopenmpi-dev
+  - openmpi-doc
   
 pkgs_to_install_for_redhat_distros:
   - dnf-utils
@@ -81,6 +90,10 @@ pkgs_to_install_for_redhat_distros:
   
   # OCaml packages below
   - ocaml
+  
+  # OpenMPI
+  - openmpi
+  - openmpi-devel
   
 pkgs_to_install_for_fedora:
   - ffmpeg-free
