@@ -12,7 +12,8 @@ aliases: {
           'win64g++': 'x86_64-w64-mingw32-g++ --static',    # for 64-bit Windows
           'win64gcc': 'x86_64-w64-mingw32-gcc --static',    # for 64-bit Windows
           'win32g++': 'i686-w64-mingw32-g++ --static',      # for 32-bit Windows
-          'win32gcc': 'i686-w64-mingw32-gcc --static'       # for 32-bit Windows
+          'win32gcc': 'i686-w64-mingw32-gcc --static',      # for 32-bit Windows
+          'arnoldc': 'bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh'
          }
          
 aliases_redhat_distros: {
