@@ -67,28 +67,21 @@
   # NOTE: Place code for installing RStudio here (if needed)
   # NOTE: Place code for Raspberry Pi cluster-related stuff here
   # TODO: Pip installs are next
-      
-# Play for creating shell aliases
-- name: Creating shell aliases
-  hosts: localhost
-  connection: local
-  vars_files:
-    - aliases.yml
-    
-  tasks:
-    - name: Writing aliases to "{{ aliases_file }}"
-      ansible.builtin.shell:
-        cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
-      loop: "{{ aliases | dict2items }}"
-      
+
 # Play for user program configuations
 - name: Installing and configuring user programs
   hosts: localhost
   connection: local
   vars_files:
     - pkgs_to_install.yml
+    - aliases.yml
 
   tasks:
+  - name: Writing aliases to "{{ aliases_file }}"
+      ansible.builtin.shell:
+        cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
+      loop: "{{ aliases | dict2items }}"
+      
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
     ansible.builtin.replace:
       path: ~/.local/share/kxmlgui5/okular/shell.rc
