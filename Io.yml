@@ -1,0 +1,27 @@
+---
+- name: Io installation
+  hosts: localhost
+  connection: local
+  vars_files:
+    - Io_vars.yml
+  
+  tasks:
+  - name: 'IO: Downloading Io'
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: http://iobin.suspended-chord.info/linux/iobin-linux-x64-deb-current.zip
+      dest: "{{ Io_download_dir }}"
+      exclude:
+        - license.txt
+        - README.txt
+      
+  - name: 'IO: Installing Io'
+    check_mode: on
+    become: yes
+    ansible.builtin.apt:
+      deb: "{{ Io_deb_path }}"
+    
+  - name: 'IO: Removing Io deb file'
+    ansible.builtin.file:
+      path: "{{ Io_deb_path }}"
+      state: absent

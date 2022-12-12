@@ -90,6 +90,7 @@
     - ssh_config_vars.yml
     - local_dirs.yml
     - pkgs_to_install.yml
+    #- Io_vars.yml
 
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -130,6 +131,8 @@
       
   - name: Configuring OCaml
     include_tasks: OCaml_for_Debian.yml
+    
+- ansible.builtin.import_playbook: Io.yml
       
 # Play for debugging stuff
 - name: Debugging stuff
