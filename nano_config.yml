@@ -1,5 +1,5 @@
 ---
 - name: 'NANO CONFIG: Writing to {{ NANORC }}'
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: echo '{{ item }}' >> '{{ NANORC }}'
   loop: "{{ nano_config_options }}"
