@@ -74,6 +74,12 @@
     ansible.builtin.command:
       cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
       
+  - name: Installing JFLAP
+    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    ansible.builtin.get_url:
+      url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
+      
 # Play for creating shell aliases
 - name: Creating shell aliases
   hosts: localhost

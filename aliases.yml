@@ -7,7 +7,8 @@ aliases: {
           'dpkg': 'sudo dpkg',
           'arp': 'sudo arp',
           'poweroff': 'sudo poweroff',
-          'reboot': 'sudo reboot'
+          'reboot': 'sudo reboot',
+          'jflap': 'java -jar $HOME/.local/bin/JFLAP7.1.jar'
          }
          
 aliases_redhat_distros: {
