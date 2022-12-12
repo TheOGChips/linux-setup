@@ -1,6 +1,5 @@
 ---
 aliases_file: "{{ lookup('ansible.builtin.env', 'HOME') }}/.aliases"
-    # echo "alias =" >> "$ALIASES"
 
 aliases: {
           'su': 'sudo su',
