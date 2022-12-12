@@ -1,0 +1,10 @@
+---
+- name: 'QUENTIER SETUP: Installing Quentier'
+  check_mode: on
+  ansible.builtin.command:
+    cmd: konsole -e 'bash install_quentier.sh "debian bullseye" apt'
+
+- name: 'QUENTIER SETUP: Starting Quentier sync with Evernote'
+  check_mode: on
+  ansible.builtin.command:
+    cmd: konsole -e 'quentier &'

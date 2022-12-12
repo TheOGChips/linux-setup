@@ -80,16 +80,9 @@
     #loop: "{{ pkgs_to_install }}"
     
   # NOTE: Place code for installing RStudio here (if needed)
-  # TODO: Place Quentier stuff into separate play
-  - name: Installing Quentier
-    check_mode: on
-    ansible.builtin.command:
-      cmd: konsole -e 'bash install_quentier.sh "debian bullseye" apt'
-      
-  - name: Starting Quentier sync with Evernote
-    check_mode: on
-    ansible.builtin.command:
-      cmd: konsole -e 'quentier &'
+  
+  - name: Quentier setup
+    include_tasks: quentier.yml
       
   - name: Configuring VMM (Virtual Machine Manager)
     check_mode: on
@@ -132,8 +125,7 @@
     ansible.builtin.command:
       cmd: konsole -e 'bash ssh_config.sh'
     
-# Play for configuring Git
-# TODO: Put this in its own YAML file
+  # Play for configuring Git
   - name: Configuring Git
     include_tasks: git_config.yml
       
