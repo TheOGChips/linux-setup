@@ -35,6 +35,7 @@
       
   - name: Upgrade current packages on machine
     ansible.builtin.apt:
+      update_cache: yes
       upgrade: safe
       
   - name: Install net-tools
@@ -129,9 +130,7 @@
     ansible.builtin.pip:
       name: '{{ pkgs_to_install_from_pip }}'
       
-  - name: Configuring OCaml
-    include_tasks: OCaml_for_Debian.yml
-    
+- ansible.builtin.import_playbook: OCaml_for_Debian.yml
 - ansible.builtin.import_playbook: Io.yml
       
 # Play for debugging stuff
