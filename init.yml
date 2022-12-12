@@ -109,6 +109,7 @@
   vars_files:
     - nano_config_options.yml
     - git_config_options.yml
+    - ssh_config_vars.yml
   
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -122,8 +123,9 @@
       
   # NOTE: This might need to be it's own playbook included here somehow
   - name: Configuring SSH
-    ansible.builtin.command:
-      cmd: konsole -e 'bash ssh_config.sh'
+    #ansible.builtin.command:
+      #cmd: konsole -e 'bash ssh_config.sh'
+    include_tasks: ssh_config.yml
     
   # Play for configuring Git
   - name: Configuring Git

@@ -1,0 +1,11 @@
+---
+ssh: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh"
+ssh_config: "{{ ssh }}/config"
+
+key_names:
+  - "github"
+  - "gitlab"
+  - "physics-lab"
+  - "rpi4"
+  - "debian-vm"
+  - "debian_chroot"
