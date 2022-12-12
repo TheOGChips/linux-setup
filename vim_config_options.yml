@@ -1,6 +1,7 @@
 ---
 VIMRC: "{{ lookup('ansible.builtin.env', 'HOME') }}/.vimrc"
 
+# NOTE: There's probably an extra config step to get Julia to work properly in Vim
 vim_config_options:
   - 'set nocompatible'
   - 'set tabstop=4'
