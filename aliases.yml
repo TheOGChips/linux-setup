@@ -13,8 +13,9 @@ aliases: {
           'win64gcc': 'x86_64-w64-mingw32-gcc --static',    # for 64-bit Windows
           'win32g++': 'i686-w64-mingw32-g++ --static',      # for 32-bit Windows
           'win32gcc': 'i686-w64-mingw32-gcc --static',      # for 32-bit Windows
-          'arnoldc': 'bash $HOME/.local/bin/ArnoldC/run_arnoldc.sh',
-          'ocaml-top': 'ocaml-top &'
+          'arnoldc': '$SHELL $HOME/.local/bin/ArnoldC/run_arnoldc.sh',
+          'ocaml-top': 'ocaml-top &',
+          'chroot-startup': '$SHELL ~/Documents/projects/chroot_jail/chroot_startup.sh'
          }
          
 aliases_redhat_distros: {

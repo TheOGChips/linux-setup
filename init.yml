@@ -78,9 +78,9 @@
 
   tasks:
   - name: Writing aliases to "{{ aliases_file }}"
-      ansible.builtin.shell:
-        cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
-      loop: "{{ aliases | dict2items }}"
+    ansible.builtin.shell:
+      cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
+    loop: "{{ aliases | dict2items }}"
       
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
     ansible.builtin.replace:
