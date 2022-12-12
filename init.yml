@@ -1,7 +1,7 @@
 # NOTE: Run using ansible-playbook -K init.yml
 ---
 # The general play
-- name: Complete initial setup of localhost
+- name: Setting up localhost
   hosts: localhost
   connection: local
   become: yes
@@ -64,22 +64,7 @@
       state: present
     
   # NOTE: Place code for installing RStudio here (if needed)
-  
-  - name: Quentier setup
-    include_tasks: quentier.yml
-      
-  - name: Configuring VMM (Virtual Machine Manager)
-    check_mode: on
-    ansible.builtin.command:
-      cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
-      
   # NOTE: Place code for Raspberry Pi cluster-related stuff here
-      
-  - name: Installing JFLAP
-    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
-    ansible.builtin.get_url:
-      url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
-      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
       
 # Play for creating shell aliases
 - name: Creating shell aliases
@@ -95,7 +80,7 @@
       loop: "{{ aliases | dict2items }}"
       
 # Play for user program configuations
-- name: Configuring user programs
+- name: Installing and configuring user programs
   hosts: localhost
   connection: local
   vars_files:
@@ -122,6 +107,20 @@
     
   - name: Setting up local app environment
     include_tasks: local.yml
+    
+  - name: Installing JFLAP
+    ansible.builtin.get_url:
+      url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
+      
+  - name: Quentier setup
+    include_tasks: quentier.yml
+      
+  - name: Configuring VMM (Virtual Machine Manager)
+    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    check_mode: on
+    ansible.builtin.command:
+      cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
       
 # Play for debugging stuff
 - name: Debugging stuff
