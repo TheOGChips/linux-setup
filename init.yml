@@ -115,6 +115,7 @@
   connection: local
   vars_files:
     - nano_config_options.yml
+    - git_config_options.yml
   
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -133,32 +134,8 @@
     
 # Play for configuring Git
 # TODO: Put this in its own YAML file
-- name: Configuring Git
-  hosts: localhost
-  connection: local
-  
-  tasks:
-  - name: Installing Git
-    become: yes
-    ansible.builtin.apt:
-      name: git
-      state: latest
-      
-  - name: Setting Username
-    ansible.builtin.command:
-      cmd: git config --global user.name "TheOGChips"
-      
-  - name: Setting E-mail
-    ansible.builtin.command:
-      cmd: git config --global user.email "swindell.christian.g@gmail.com"
-      
-  - name: Setting Credential Helper
-    ansible.builtin.command:
-      cmd: git config --global credential.helper store
-      
-  - name: Setting SSH key
-    ansible.builtin.command:
-      cmd: git config --global core.sshCommand "ssh -i ~/.ssh/github -F /dev/null"
+  - name: Configuring Git
+    include_tasks: git_config.yml
       
 # Play for debugging stuff
 - name: Debugging stuff
@@ -167,6 +144,7 @@
   vars_files:
     - aliases.yml
     - nano_config_options.yml
+    - git_config_options.yml
   
   tasks:
   - name: 'DEBUGGING: Removing {{ aliases_file }}'
@@ -180,3 +158,9 @@
     ansible.builtin.file:
       name: '{{ NANORC }}'
       state: absent
+      
+  - name: 'DEBUGGING: Resetting Git global options'
+    check_mode: on
+    ansible.builtin.command:
+      cmd: git config --global --unset {{ item.key }}
+    loop: "{{ git_config_options | dict2items }}"

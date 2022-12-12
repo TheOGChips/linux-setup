@@ -1,0 +1,7 @@
+---
+git_config_options: {
+                     'user.name': 'TheOGChips',
+                     'user.email': 'swindell.christian.g@gmail.com',
+                     'credential.helper': 'store',
+                     'core.sshcommand': 'ssh -i ~/.ssh/github -F /dev/null'
+                    }
