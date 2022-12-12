@@ -65,6 +65,7 @@
     
   # NOTE: Place code for installing RStudio here (if needed)
   # NOTE: Place code for Raspberry Pi cluster-related stuff here
+  # TODO: Pip installs are next
       
 # Play for creating shell aliases
 - name: Creating shell aliases
@@ -88,6 +89,7 @@
     - git_config_options.yml
     - ssh_config_vars.yml
     - local_dirs.yml
+    - pkgs_to_install.yml
 
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
@@ -117,10 +119,14 @@
     include_tasks: quentier.yml
       
   - name: Configuring VMM (Virtual Machine Manager)
-    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
     check_mode: on
     ansible.builtin.command:
       cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
+      
+  - name: Installing pip packages
+    check_mode: off
+    ansible.builtin.pip:
+      name: '{{ pkgs_to_install_from_pip }}'
       
 # Play for debugging stuff
 - name: Debugging stuff

@@ -85,4 +85,10 @@ pkgs_to_install_for_rocky:
   - libreoffice-calc
   - libreoffice-impress
   - python3
- 
+  
+pkgs_to_install_from_pip:
+  - numpy
+  - pandas
+  - matplotlib
+  - scipy
+  - ipython
