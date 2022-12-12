@@ -38,6 +38,10 @@ pkgs_to_install:
   - vinagre
   - vlc
   - zsh
+  
+  # OCaml packages below
+  - opam
+  
    
 pkgs_to_install_for_debian:
   - default-jdk
@@ -56,6 +60,12 @@ pkgs_to_install_for_debian:
   - texlive-latex-extra
   - texlive-latex-extra-doc
   
+  # OCaml packages below
+  - camlp4
+  - rlwrap
+  - bubblewrap
+  - libgtksourceview2.0-dev # needed for ocaml-top
+  
 pkgs_to_install_for_redhat_distros:
   - dnf-utils
   - gcc-c++
@@ -65,6 +75,9 @@ pkgs_to_install_for_redhat_distros:
   - ncurses-devel
   - opencv-devel
   - ruby-doc
+  
+  # OCaml packages below
+  - ocaml
   
 pkgs_to_install_for_fedora:
   - ffmpeg-free
@@ -92,3 +105,13 @@ pkgs_to_install_from_pip:
   - matplotlib
   - scipy
   - ipython
+  
+pkgs_to_install_from_opam:
+  - ocamlfind
+  
+pkgs_to_install_from_opam_for_debian:
+  - ounit
+  - ocaml-top
+  
+pkgs_to_install_from_opam_for_redhat_distros:
+  - user-setup

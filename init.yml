@@ -124,9 +124,12 @@
       cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
       
   - name: Installing pip packages
-    check_mode: off
+    check_mode: on
     ansible.builtin.pip:
       name: '{{ pkgs_to_install_from_pip }}'
+      
+  - name: Configuring OCaml
+    include_tasks: OCaml_for_Debian.yml
       
 # Play for debugging stuff
 - name: Debugging stuff
