@@ -7,6 +7,15 @@
   
   tasks:
   - name: 'NANO CONFIG: Writing to {{ NANORC }}'
-    ansible.builtin.command:
+    ansible.builtin.shell:
       cmd: echo '{{ item }}' >> '{{ NANORC }}'
     loop: "{{ nano_config_options }}"
+    
+  - name: 'NANO CONFIG: Copying {{ NANORC }} to root'
+    check_mode: on
+    become: yes
+    ansible.builtin.copy:
+      src: '{{ NANORC }}'
+      dest: /root/.nanorc
+      owner: root
+      group: root
