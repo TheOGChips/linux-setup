@@ -8,7 +8,11 @@ aliases: {
           'arp': 'sudo arp',
           'poweroff': 'sudo poweroff',
           'reboot': 'sudo reboot',
-          'jflap': 'java -jar $HOME/.local/bin/JFLAP7.1.jar'
+          'jflap': 'java -jar $HOME/.local/bin/JFLAP7.1.jar',
+          'win64g++': 'x86_64-w64-mingw32-g++ --static',    # for 64-bit Windows
+          'win64gcc': 'x86_64-w64-mingw32-gcc --static',    # for 64-bit Windows
+          'win32g++': 'i686-w64-mingw32-g++ --static',      # for 32-bit Windows
+          'win32gcc': 'i686-w64-mingw32-gcc --static'       # for 32-bit Windows
          }
          
 aliases_redhat_distros: {

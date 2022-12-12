@@ -1,7 +1,6 @@
-# run using ansible-playbook -K init.yml
+# NOTE: Run using ansible-playbook -K init.yml
 ---
 # The general play
-
 - name: Complete initial setup of localhost
   hosts: localhost
   connection: local
@@ -73,6 +72,8 @@
     check_mode: on
     ansible.builtin.command:
       cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
+      
+  # NOTE: Place code for Raspberry Pi cluster-related stuff here
       
   - name: Installing JFLAP
     become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
