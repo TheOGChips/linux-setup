@@ -1,2 +1,6 @@
 *.odt
 ssh_config.txt
+bin
+include
+share
+src

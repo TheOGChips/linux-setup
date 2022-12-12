@@ -1,0 +1,11 @@
+---
+LOCAL: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local"
+
+local_dirs:
+  - bin
+  - include
+  - src
+
+local_share_dirs:
+  - share/gnote
+  - share/vinagre

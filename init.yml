@@ -9,12 +9,6 @@
   vars_files:
     - pkgs_to_remove.yml
     - pkgs_to_install.yml
-  #become_method: sudo
-  #vars_files:
-  #- vars/main.yml
-
-  #roles:
-  #- role: geerlingguy.apache
 
   tasks:
   - name: Remove unwanted KDE packages
@@ -40,13 +34,6 @@
         ansible.builtin.debug:
           msg: The files could not be found and have likely already been deleted'
       
-      #ignore_errors: true
-    #ansible.builtin.copy:
-      #src: files/site/index.html
-      #dest: /var/www/html/index.html
-      #owner: root
-      #group: root
-      #mode: 0644
   - name: Upgrade current packages on machine
     ansible.builtin.apt:
       upgrade: safe
@@ -57,7 +44,7 @@
       state: latest
       
   - name: Make edits to /etc/sudoers
-    become_user: chris
+    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
     ansible.builtin.command:
       cmd: konsole -e 'bash visudo_edits.sh apt dpkg'
       
@@ -75,9 +62,7 @@
     check_mode: on
     ansible.builtin.apt:
       name: "{{ pkgs_to_install }}"
-      #name: "{{ item }}"
       state: present
-    #loop: "{{ pkgs_to_install }}"
     
   # NOTE: Place code for installing RStudio here (if needed)
   
@@ -110,7 +95,8 @@
     - nano_config_options.yml
     - git_config_options.yml
     - ssh_config_vars.yml
-  
+    - local_dirs.yml
+
   tasks:
   - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
     ansible.builtin.replace:
@@ -121,15 +107,14 @@
   - name: Configuring Nano
     include_tasks: nano_config.yml
       
-  # NOTE: This might need to be it's own playbook included here somehow
   - name: Configuring SSH
-    #ansible.builtin.command:
-      #cmd: konsole -e 'bash ssh_config.sh'
     include_tasks: ssh_config.yml
     
-  # Play for configuring Git
   - name: Configuring Git
     include_tasks: git_config.yml
+    
+  - name: Setting up local app environment
+    include_tasks: local.yml
       
 # Play for debugging stuff
 - name: Debugging stuff

@@ -1,0 +1,12 @@
+---
+- name: Copying directories into {{ LOCAL }}
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '{{ LOCAL }}'
+  loop: '{{ local_dirs }}'
+  
+- name: Copying directories into {{ LOCAL }}/share
+  ansible.builtin.copy:
+    src: '{{ item }}'
+    dest: '{{ LOCAL }}/share'
+  loop: '{{ local_share_dirs }}'
