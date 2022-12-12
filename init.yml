@@ -110,6 +110,7 @@
 - ansible.builtin.import_playbook: quentier.yml
 - ansible.builtin.import_playbook: OCaml_for_Debian.yml
 - ansible.builtin.import_playbook: Io.yml
+- ansible.builtin.import_playbook: vim_config.yml
       
 # Play for debugging stuff
 - name: Debugging stuff
@@ -119,6 +120,7 @@
     - aliases.yml
     - nano_config_options.yml
     - git_config_options.yml
+    - vim_config_options.yml
   
   tasks:
   - name: 'DEBUGGING: Removing {{ aliases_file }}'
@@ -138,3 +140,9 @@
     ansible.builtin.command:
       cmd: git config --global --unset {{ item.key }}
     loop: "{{ git_config_options | dict2items }}"
+    
+  - name: 'DEBUGGING: Removing {{ VIMRC }}'
+    check_mode: off
+    ansible.builtin.file:
+      name: '{{ VIMRC }}'
+      state: absent

@@ -35,6 +35,9 @@ pkgs_to_install:
   - thefuck
   - thunderbird
   - tree
+  - vim
+  - vim-fugitive
+  - vim-latexsuite
   - vinagre
   - vlc
   - zsh

@@ -1,0 +1,22 @@
+---
+- name: Configuring Vim
+  hosts: localhost
+  connection: local
+  vars_files:
+    - vim_config_options.yml
+  
+  tasks:
+  - name: 'VIM CONFIG: Writing to {{ VIMRC }}'
+    ansible.builtin.shell:
+      cmd: echo '{{ item }}' >> '{{ VIMRC }}'
+    loop: "{{ vim_config_options }}"
+    
+  - name: 'VIM CONFIG: Copying {{ VIMRC }} to root'
+    check_mode: on
+    become: yes
+    ansible.builtin.copy:
+      src: '{{ VIMRC }}'
+      dest: /root/.vimrc
+      owner: root
+      group: root
+ 
