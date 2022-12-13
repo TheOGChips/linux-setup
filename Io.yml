@@ -2,8 +2,12 @@
 - name: Io installation
   hosts: localhost
   connection: local
-  vars_files:
-    - Io_vars.yml
+  vars:
+    - Io_download_dir: "{{ lookup('ansible.builtin.env', 'HOME') }}/Downloads"
+    - Io_ver: '2013.11.04'
+    - pkg_type: deb
+    - Io_deb: IoLanguage-{{ Io_ver }}-Linux-x64.{{ pkg_type }}
+    - Io_deb_path: '{{ Io_download_dir }}/{{ Io_deb }}'
   
   tasks:
   - name: 'IO: Downloading Io'
@@ -21,7 +25,7 @@
     ansible.builtin.apt:
       deb: "{{ Io_deb_path }}"
     
-  - name: 'IO: Removing Io deb file'
+  - name: 'IO: Removing Io deb archive'
     ansible.builtin.file:
       path: "{{ Io_deb_path }}"
       state: absent

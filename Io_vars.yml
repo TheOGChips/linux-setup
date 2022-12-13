@@ -1,6 +1,0 @@
----
-Io_download_dir: "{{ lookup('ansible.builtin.env', 'HOME') }}/Downloads"
-Io_ver: '2013.11.04'
-pkg_type: deb
-Io_deb: IoLanguage-{{ Io_ver }}-Linux-x64.{{ pkg_type }}
-Io_deb_path: '{{ Io_download_dir }}/{{ Io_deb }}'

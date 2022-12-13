@@ -2,8 +2,16 @@
 - name: Configuring SSH
   hosts: localhost
   connection: local
-  vars_files:
-    - ssh_config_vars.yml
+  vars:
+    - ssh: "{{ lookup('ansible.builtin.env', 'HOME') }}/.ssh"
+    - ssh_config: "{{ ssh }}/config"
+    - key_names:
+      - "github"
+      - "gitlab"
+      - "physics-lab"
+      - "rpi4"
+      - "debian-vm"
+      - "debian_chroot"
   
   tasks:
   - name: Generating SSH keys
@@ -24,5 +32,6 @@
           msg: SSH config file not found and could not be copied. You'll have to create it manually.
     
   - name: Copying SSH key to {{ key_names[2] }}
+    check_mode: on
     ansible.builtin.command:
       cmd: ssh-copy-id -i {{ ssh }}/{{ key_names[2] }} cswindell@{{ key_names[2] }}
