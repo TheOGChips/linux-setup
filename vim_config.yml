@@ -3,20 +3,28 @@
   hosts: localhost
   connection: local
   vars_files:
+    - debug_mode.yml
     - vim_config_options.yml
-  
+    
   tasks:
   - name: 'VIM CONFIG: Writing to {{ VIMRC }}'
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.shell:
       cmd: echo '{{ item }}' >> '{{ VIMRC }}'
     loop: "{{ vim_config_options }}"
     
   - name: 'VIM CONFIG: Copying {{ VIMRC }} to root'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     become: yes
-    ansible.builtin.copy:
-      src: '{{ VIMRC }}'
-      dest: /root/.vimrc
-      owner: root
-      group: root
+    block:
+      - name: 'VIM CONFIG: Attempting to copy {{ VIMRC }} to root'
+        ansible.builtin.copy:
+          src: '{{ VIMRC }}'
+          dest: /root/.vimrc
+          owner: root
+          group: root
+    rescue:
+      - name: 'VIM CONFIG: Error copying {{ VIMRC }} to root'
+        ansible.builtin.debug:
+          msg: This likely failed because you are in debug mode.
  

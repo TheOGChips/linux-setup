@@ -3,16 +3,18 @@
 - name: Quentier installation
   hosts: localhost
   connection: local
+  vars_files:
+    - debug_mode.yml
   
   tasks:
   - name: 'QUENTIER: Adding Quentier repo (step 1)'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
       #cmd: konsole -e 'bash install_quentier.sh "debian bullseye" apt'
       cmd: echo 'deb http://download.opensuse.org/repositories/home:/d1vanov:/quentier-master/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:d1vanov:quentier-master.list
       
   - name: 'QUENTIER: Adding Quentier repo (step 2)'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
       cmd: curl -fsSL https://download.opensuse.org/repositories/home:d1vanov:quentier-master/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_d1vanov_quentier-master.gpg > /dev/null
     
@@ -20,7 +22,7 @@
   - name: 'QUENTIER: Installation'
     block:
       - name: 'QUENTIER: Installing Quentier'
-        check_mode: on
+        check_mode: '{{ debug_mode }}'
         become: yes
         ansible.builtin.apt:
           name: quentier-qt5
@@ -32,6 +34,6 @@
           msg: Package quentier-qt5 won't be available while testing
 
   - name: 'QUENTIER: Starting Quentier sync with Evernote'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
       cmd: konsole -e 'quentier &'

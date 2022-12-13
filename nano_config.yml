@@ -3,19 +3,27 @@
   hosts: localhost
   connection: local
   vars_files:
+    - debug_mode.yml
     - nano_config_options.yml
   
   tasks:
   - name: 'NANO CONFIG: Writing to {{ NANORC }}'
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.shell:
       cmd: echo '{{ item }}' >> '{{ NANORC }}'
     loop: "{{ nano_config_options }}"
     
   - name: 'NANO CONFIG: Copying {{ NANORC }} to root'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     become: yes
-    ansible.builtin.copy:
-      src: '{{ NANORC }}'
-      dest: /root/.nanorc
-      owner: root
-      group: root
+    block:
+      - name: 'NANO CONFIG: Attempting to copy {{ NANORC }} to root'
+        ansible.builtin.copy:
+          src: '{{ NANORC }}'
+          dest: /root/.nanorc
+          owner: root
+          group: root
+    rescue:
+      - name: 'NANO CONFIG: Error copying {{ NANORC }} to root'
+        ansible.builtin.debug:
+          msg: This likely failed because you are in debug mode.

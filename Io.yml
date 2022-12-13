@@ -8,9 +8,12 @@
     - pkg_type: deb
     - Io_deb: IoLanguage-{{ Io_ver }}-Linux-x64.{{ pkg_type }}
     - Io_deb_path: '{{ Io_download_dir }}/{{ Io_deb }}'
+  vars_files:
+    - debug_mode.yml
   
   tasks:
   - name: 'IO: Downloading Io'
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.unarchive:
       remote_src: yes
       src: http://iobin.suspended-chord.info/linux/iobin-linux-x64-deb-current.zip
@@ -20,12 +23,19 @@
         - README.txt
       
   - name: 'IO: Installing Io'
-    check_mode: on
+    check_mode: '{{ debug_mode }}'
     become: yes
-    ansible.builtin.apt:
-      deb: "{{ Io_deb_path }}"
+    block:
+      - name: 'IO: Attempting Io install'
+        ansible.builtin.apt:
+          deb: "{{ Io_deb_path }}"
+    rescue:
+      - name: 'IO: Io install failed'
+        ansible.builtin.debug:
+          msg: This likely failed because you are in debug mode.
     
   - name: 'IO: Removing Io deb archive'
+    check_mode: '{{ debug_mode }}'
     ansible.builtin.file:
       path: "{{ Io_deb_path }}"
       state: absent

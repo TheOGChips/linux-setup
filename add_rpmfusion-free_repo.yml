@@ -1,5 +1,6 @@
 ---
 - name: Adding rpmfusion-free repository
+  check_mode: '{{ debug_mode }}'
   become: yes
   ansible.builtin.command:
     cmd: rpm -Uvh http://download1.rpmfusion.org/free/fedora/rmpfusion-free-release-stable.noarch.rpm
