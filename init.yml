@@ -128,3 +128,4 @@
 - ansible.builtin.import_playbook: Io.yml
 - ansible.builtin.import_playbook: vim_config.yml
 - ansible.builtin.import_playbook: vivi.yml
+- ansible.builtin.import_playbook: vmware_horizon.yml
