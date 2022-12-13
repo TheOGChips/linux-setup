@@ -2,6 +2,13 @@
 - name: Configuring Git
   hosts: localhost
   connection: local
+  vars:
+    - git_config_options: {
+                           'user.name': 'TheOGChips',
+                           'user.email': 'swindell.christian.g@gmail.com',
+                           'credential.helper': 'store',
+                           'core.sshcommand': 'ssh -i ~/.ssh/github -F /dev/null'
+                          }
   vars_files:
     - debug_mode.yml
     - git_config_options.yml
