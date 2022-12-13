@@ -1,0 +1,24 @@
+---
+- name: Vivi installation
+  hosts: localhost
+  connection: local
+  vars:
+    - pkg: vivi.deb
+    - vivi_deb_path: "{{ lookup('ansible.builtin.env', 'HOME') }}/Downloads/{{ pkg }}"
+  
+  tasks:
+  - name: Downloading Vivi
+    ansible.builtin.get_url:
+      url: https://api.vivi.io/deb
+      dest: "{{ vivi_deb_path }}"
+      
+  - name: Installing Vivi
+    check_mode: on
+    become: yes
+    ansible.builtin.apt:
+      deb: "{{ vivi_deb_path }}"
+      
+  - name: Removing Vivi deb archive
+    ansible.builtin.file:
+      path: "{{ vivi_deb_path }}"
+      state: absent
