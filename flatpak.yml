@@ -7,9 +7,9 @@
     - pkgs_to_install.yml
   
   tasks:
-    - name: Attempting to install Flatpak programs
+    - name: 'FLATPAK: Attempting to install Flatpak programs'
       block:
-        - name: Adding Flathub remote
+        - name: 'FLATPAK: Adding Flathub remote'
           check_mode: '{{ debug_mode }}'
           community.general.flatpak_remote:
             name: flathub
@@ -17,7 +17,7 @@
             method: user
             state: present
         
-        - name: Installing Flatpak programs
+        - name: 'FLATPAK: Installing Flatpak programs'
           check_mode: '{{ debug_mode }}'
           community.general.flatpak:
             name: '{{ item }}'
@@ -25,7 +25,7 @@
             state: present
           loop: '{{ pkgs_to_install_flatpak }}'
       
-        - name: Setting filesystem overrides for certain Flatpak programs
+        - name: 'FLATPAK: Setting filesystem overrides for certain Flatpak programs'
           check_mode: '{{ debug_mode }}'
           become: yes
           ansible.builtin.command:
@@ -35,7 +35,7 @@
             - com.microsoft.Teams
           
       rescue:
-        - name: Error installing flatpak programs
+        - name: 'FLATPAK: Error installing flatpak programs'
           ansible.builtin.debug:
             msg: If you're still testing, Flatpak is probably just not installed.
       

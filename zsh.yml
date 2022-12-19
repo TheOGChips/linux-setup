@@ -6,7 +6,7 @@
     - debug_mode.yml
   
   tasks: 
-  - name: Copying user Z shell config files
+  - name: 'ZSH: Copying user Z shell config files'
     check_mode: '{{ debug_mode }}'
     ansible.builtin.copy:
       src: zsh/{{ lookup('ansible.builtin.env', 'USER') }}.{{ item }}
@@ -19,7 +19,7 @@
       - zshenv
       - zkbd
       
-  - name: Copying root Z shell config files
+  - name: 'ZSH: Copying root Z shell config files'
     check_mode: '{{ debug_mode }}'
     become: yes
     ansible.builtin.copy:
@@ -33,7 +33,7 @@
       - zshenv
       - zkbd
       
-  - name: Changing default shell to Z shell
+  - name: 'ZSH: Changing default shell to Z shell'
     check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
       cmd: konsole -e 'chsh -s /usr/bin/zsh'
