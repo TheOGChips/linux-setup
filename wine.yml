@@ -1,0 +1,32 @@
+---
+- name: WINE install and config
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - debug_mode.yml
+    
+  tasks:
+  - name: 'WINE: Adding 32-bit architecture'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: dpkg --add-architecture i386
+      
+  - name: 'WINE: Installing WINE'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: '{{ item }}'
+      state: present
+    loop:
+      - wine
+      - wine32
+      
+  - name: 'WINE: Setting 32-bit WINE prefix'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.shell:
+      cmd: WINEARCH=win32 WINEPREFIX={{ lookup('ansible.builtin.env', 'HOME') }}/.wine32 winecfg
+      
+  - name: 'WINE: Downloading LTspice'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.get_url:
+      url: https://ltspice.analog.com/software/LTspice64.exe
