@@ -48,6 +48,11 @@ pkgs_to_install:
   # OCaml packages below
   - opam
   
+  # RStudio
+  #- r-base
+  #- libxml2-dev
+  #- libcurl4-openssl-dev
+  #- libssl-dev
    
 pkgs_to_install_for_debian:
   - default-jdk
