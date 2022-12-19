@@ -71,30 +71,39 @@
       name: "{{ pkgs_to_install }}"
       state: present
     
-  # NOTE: Place code for installing RStudio here (if needed)
   # NOTE: Place code for Raspberry Pi cluster-related stuff here
   #bash cluster_access_setup/node_ssh_aliases_setup.sh
   #bash cluster_access_setup/clusterssh_setup.sh
   
-  # TODO: Fit these in the ZSH section later
-  #echo 'source /etc/profile.d/modules.sh' >> "$HOME"/.zshrc
-  #echo 'module load mpi/openmpi-x86_64' >> "$HOME"/.zshrc
-  #echo 'eval $(thefuck --alias)' >> "$HOME"/.bashrc
-  
-  # echo -e '\nNOTE: Check this script for notes on how to install the Waveforms SDK\n\n'
+  # NOTE: Below is information on how to install the Waveforms SDK, should that ever be needed again
   # Download and install the Adept runtime environment, then Waveforms
   # https://mautic.digilentinc.com/adept-runtime-download     <- Adept runtime environment
   # https://digilent.com/shop/software/digilent-waveforms/download    <- Waveforms SDK
   # Tutorials:
   #   - https://digilent.com/reference/software/waveforms/waveforms-3/getting-started-guide
   #   - https://digilent.com/reference/test-and-measurement/guides/waveforms-using-waveforms-sdk
-  #firefox https://mautic.digilentinc.com/adept-runtime-download
-  #firefox https://digilent.com/shop/software/digilent-waveforms/download
+  # firefox https://mautic.digilentinc.com/adept-runtime-download
+  # firefox https://digilent.com/shop/software/digilent-waveforms/download
   
-  # TODO: Download and install MATLAB (currently getting a "file too short" error for libicudata.so.69)
+  # NOTE: Instructions for installing MATLAB, if I should ever need it again
+  # Download and install MATLAB (currently getting a "file too short" error for libicudata.so.69)
   #firefox https://www.mathworks.com/downloads/
   #echo "alias update-matlab='sudo /usr/local/MATLAB/R2021a/bin/glnxa64/update_installer'" >> .bash_aliases
-
+  
+  # NOTE: In case I ever need to disable the touch screen the hard way
+  #if [ "$distro" = "$DEBIAN" ]
+  #  then
+  #  # NOTE: Since a basic use of sed seems to not work after testing in a VM, this was an easier
+  #  #       solution than trying to make time to go through the sed documentation. I just don't
+  #  #       have time for that currently.
+  #  # src: https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
+  #  LIBINPUT=/usr/share/X11/xorg.conf.d/40-libinput.conf
+  #  sudo chmod o+w "$LIBINPUT"
+  #  sudo echo '        Option "Ignore" "on"' >> "$LIBINPUT"
+  #  sudo chmod o-w "$LIBINPUT"
+  #  echo -e "\nA line for disabling hardware components has been added to the end of $LIBINPUT." echo 'Cut and paste it inside the section block of hardware component you want to disable.' echo -e "$LIBINPUT will now open in Vim...\n"
+  #  konsole -e "sudo vim $LIBINPUT"
+  #fi
   
 # Play for user program configuations
 - name: Installing and configuring user programs
@@ -148,5 +157,5 @@
 - ansible.builtin.import_playbook: bash.yml
 - ansible.builtin.import_playbook: zsh.yml
 - ansible.builtin.import_playbook: flatpak.yml
-- ansible.builtin.import_playbook: Teensyduino.yml
+#- ansible.builtin.import_playbook: Teensyduino.yml
 #- ansible.builtin.import_playbook: wine.yml
