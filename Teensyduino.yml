@@ -1,0 +1,63 @@
+---
+- name: Teensyduino Install
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+  vars:
+    - teensyduino_installer: TeensyduinoInstall.linux64
+    - arduino_location: /opt
+    - arduino_ver: arduino-1.8.19
+    - arduino_tarball: '{{ arduino_ver }}-linux64.tar.xz'
+    
+  tasks:
+  - name: 'TEENSYDUINO: Downloading and installing Teensy UDEV rules'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.get_url:
+      url: https://www.pjrc.com/teensy/00-teensy.rules
+      dest: /etc/udev/rules.d/
+      
+  - name: 'TEENSYDUINO: Downloading Teensyduino installer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.get_url:
+      url: https://www.pjrc.com/teensy/td_156/{{ teensyduino_installer }}
+      dest: .
+      mode: 0755
+      
+  - name: 'TEENSYDUINO: Creating {{ arduino_location }}'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.file:
+      path: /opt
+      state: directory
+      owner: root
+      group: root
+      
+  - name: 'TEENSYDUINO: Downloading Arduino archive'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.unarchive:
+      remote_src: yes
+      src: https://downloads.arduino.cc/{{ arduino_tarball }}
+      dest: '{{ arduino_location }}'
+      creates: '{{ arduino_location }}/{{ arduino_ver }}'
+      owner: "{{ lookup('ansible.builtin.env', 'USER') }}"
+      group: "{{ lookup('ansible.builtin.env', 'USER') }}"
+      
+  - name: 'TEENSYDUINO: Installing Arduino'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.command:
+      cmd: '{{ arduino_location }}/{{ arduino_ver }}/install.sh'
+      
+  - name: 'TEENSYDUINO: Installing Teensyduino'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: ./{{ teensyduino_installer }}
+      
+  - name: 'TEENSYDUINO: Removing Teensyduino Installer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.file:
+      path: '{{ teensyduino_installer }}'
+      state: absent
