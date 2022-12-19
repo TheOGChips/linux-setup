@@ -1,0 +1,41 @@
+---
+- name: Install Flatpak programs
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+    - pkgs_to_install.yml
+  
+  tasks:
+    - name: Attempting to install Flatpak programs
+      block:
+        - name: Adding Flathub remote
+          check_mode: '{{ debug_mode }}'
+          community.general.flatpak_remote:
+            name: flathub
+            flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+            method: user
+            state: present
+        
+        - name: Installing Flatpak programs
+          check_mode: '{{ debug_mode }}'
+          community.general.flatpak:
+            name: '{{ item }}'
+            method: user
+            state: present
+          loop: '{{ pkgs_to_install_flatpak }}'
+      
+        - name: Setting filesystem overrides for certain Flatpak programs
+          check_mode: '{{ debug_mode }}'
+          become: yes
+          ansible.builtin.command:
+            cmd: flatpak override {{ item }} --filesystem=home
+          loop:
+            - com.discordapp.Discord
+            - com.microsoft.Teams
+          
+      rescue:
+        - name: Error installing flatpak programs
+          ansible.builtin.debug:
+            msg: If you're still testing, Flatpak is probably just not installed.
+      
