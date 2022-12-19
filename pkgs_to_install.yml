@@ -41,6 +41,7 @@ pkgs_to_install:
   - vinagre
   - vlc
   - zsh
+  - zsh-doc
   
   # OCaml packages below
   - opam
