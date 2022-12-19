@@ -73,13 +73,14 @@
     
   # NOTE: Place code for installing RStudio here (if needed)
   # NOTE: Place code for Raspberry Pi cluster-related stuff here
+  #bash cluster_access_setup/node_ssh_aliases_setup.sh
+  #bash cluster_access_setup/clusterssh_setup.sh
   
   # TODO: Fit these in the ZSH section later
   #echo 'source /etc/profile.d/modules.sh' >> "$HOME"/.zshrc
   #echo 'module load mpi/openmpi-x86_64' >> "$HOME"/.zshrc
+  #echo 'eval $(thefuck --alias)' >> "$HOME"/.bashrc
   
-  # TODO: Vivi installation is next
-
 # Play for user program configuations
 - name: Installing and configuring user programs
   hosts: localhost
@@ -129,3 +130,5 @@
 - ansible.builtin.import_playbook: vim_config.yml
 - ansible.builtin.import_playbook: vivi.yml
 - ansible.builtin.import_playbook: vmware_horizon.yml
+- ansible.builtin.import_playbook: bash.yml
+- ansible.builtin.import_playbook: zsh.yml

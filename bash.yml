@@ -1,0 +1,24 @@
+---
+- name: Bash shell configuration
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+  
+  tasks: 
+  - name: Copying user Bash config files
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.copy:
+      src: bashrc/{{ lookup('ansible.builtin.env', 'USER') }}.bashrc
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.bashrc"
+      owner: "{{ lookup('ansible.builtin.env', 'USER') }}"
+      group: "{{ lookup('ansible.builtin.env', 'USER') }}"
+      
+  - name: Copying root Bash config files
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.copy:
+      src: bashrc/root.bashrc
+      dest: /root/.bashrc
+      owner: root
+      group: root
