@@ -35,5 +35,6 @@
       
   - name: 'ZSH: Changing default shell to Z shell'
     check_mode: '{{ debug_mode }}'
-    ansible.builtin.command:
-      cmd: konsole -e 'chsh -s /usr/bin/zsh'
+    ansible.builtin.user:
+      name: "{{ lookup('ansible.builtin.env', 'USER') }}"
+      shell: /usr/bin/zsh
