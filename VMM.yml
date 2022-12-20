@@ -1,0 +1,66 @@
+---
+- name: Configuring Virtual Machine Manager for Debian
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+    
+  # SRC: https://linuxize.com/post/how-to-install-kvm-on-ubuntu-20-04/
+  # SRC: https://computingforgeeks.com/use-virt-manager-as-non-root-user/
+  tasks:
+  - name: 'VMM: Attempting to remove remote-viewer'
+    block:
+      - name: 'VMM: Removing remote-viewer'
+        become: yes
+        ansible.builtin.shell:
+          cmd: rm -r $(find / -name "*remote-viewer*")
+          warn: false
+    rescue:
+      - name: 'VMM: Files for remote-viewer not found'
+        ansible.builtin.debug:
+          msg: remote-viewer either not installed or already removed
+        
+  - name: 'VMM: Adding user to groups kvm and libvirt'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.user:
+      append: true
+      groups: '{{ item }}'
+      name: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    loop:
+      - kvm
+      - libvirt-qemu
+      
+  - name: 'VMM: Removing libvirt images directory'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.file:
+      path: /var/lib/libvirt/images
+      state: absent
+      
+  - name: 'VMM: Creating link to VM images directory'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.file:
+      path: /var/lib/libvirt/images
+      src: /media/{{ lookup('ansible.builtin.env', 'USER') }}/Torchwood/vm_images
+      state: link
+      owner: libvirt-qemu
+      group: libvirt-qemu
+      follow: false
+  
+  - name: 'VMM: Setting user in QEMU config'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.replace:
+      path: /etc/libvirt/qemu.conf
+      regexp: \#user = "root"
+      replace: user = "{{ lookup('ansible.builtin.env', 'USER') }}"
+      
+  - name: 'VMM: Restarting libvirtd'
+    check_mode: '{{ debug_mode }}'
+    become: yes
+    ansible.builtin.systemd:
+      name: libvirtd
+      state: restarted
+      enabled: true

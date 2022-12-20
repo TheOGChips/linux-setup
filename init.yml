@@ -159,3 +159,4 @@
 - ansible.builtin.import_playbook: flatpak.yml
 #- ansible.builtin.import_playbook: Teensyduino.yml
 #- ansible.builtin.import_playbook: wine.yml
+- ansible.builtin.import_playbook: VMM.yml
