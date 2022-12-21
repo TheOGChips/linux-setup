@@ -10,14 +10,13 @@
   - name: 'QUENTIER: Adding Quentier repo (step 1)'
     check_mode: '{{ debug_mode }}'
     ansible.builtin.shell:
-      #cmd: konsole -e 'bash install_quentier.sh "debian bullseye" apt'
       cmd: echo 'deb http://download.opensuse.org/repositories/home:/d1vanov:/quentier-master/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:d1vanov:quentier-master.list
       
   - name: 'QUENTIER: Adding Quentier repo (step 2)'
     check_mode: '{{ debug_mode }}'
-    warn: false
     ansible.builtin.shell:
       cmd: curl -fsSL https://download.opensuse.org/repositories/home:d1vanov:quentier-master/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_d1vanov_quentier-master.gpg > /dev/null
+      warn: false
     
   # NOTE: On RPM-based distros, quentier is in the repos -> dnf install quentier
   - name: 'QUENTIER: Installation'
