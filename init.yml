@@ -128,11 +128,18 @@
       regexp: '</gui>' # NOTE: This might need to be </kpartgui>
       replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
     
-  - name: Installing JFLAP
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.get_url:
-      url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
-      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
+  # NOTE: Currently not working, website inaccessible
+  - name: Attempting to install JFLAP
+    block:
+      - name: Installing JFLAP
+        check_mode: '{{ debug_mode }}'
+        ansible.builtin.get_url:
+          url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
+          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
+    rescue:
+      - name: Installing JFLAP failed
+        ansible.builtin.debug:
+          msg: Check error message. JFLAP website has been inaccessible lately.
       
   - name: Configuring VMM (Virtual Machine Manager)
     check_mode: '{{ debug_mode }}'
