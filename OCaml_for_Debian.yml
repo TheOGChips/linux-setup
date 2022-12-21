@@ -22,7 +22,7 @@
   - name: Installing opam packages
     check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
-      cmd: opam install {{ item }}
+      cmd: opam install -y {{ item }}
     loop: '{{ pkgs_to_install_from_opam + pkgs_to_install_from_opam_for_debian }}'
   
 # NOTE: ocaml-top needs to be run from the command line (i.e. "$ ocaml-top")

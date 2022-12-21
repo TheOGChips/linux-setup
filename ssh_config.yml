@@ -16,11 +16,17 @@
     - debug_mode.yml
   
   tasks:
-  - name: Generating SSH keys
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.command:
-      cmd: ssh-keygen -b 4096 -t ed25519 -f {{ ssh }}/{{ item }}
-    loop: '{{ key_names }}'
+  - name: Attempting to generate SSH keys
+    block:
+      - name: Generating SSH keys
+        check_mode: '{{ debug_mode }}'
+        ansible.builtin.command:
+          cmd: ssh-keygen -b 4096 -t ed25519 -f {{ ssh }}/{{ item }}
+        loop: '{{ key_names }}'
+    rescue:
+      - name: Error generating SSH keys
+        ansible.builtin.debug:
+          msg: SSH keys likely already exist. Check the error message.
   
   - name: Copying SSH config file to {{ ssh }}
     block:

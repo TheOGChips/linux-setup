@@ -3,6 +3,7 @@ pkgs_to_install:
   - clang
   - clojure
   - cmatrix
+  - curl
   - dconf-editor
   #- ddd
   - debootstrap
@@ -136,7 +137,7 @@ pkgs_to_install_from_opam:
   
 pkgs_to_install_from_opam_for_debian:
   - ounit
-  - ocaml-top
+  #- ocaml-top  # NOTE: Doesn't seem to be available currently
   
 pkgs_to_install_from_opam_for_redhat_distros:
   - user-setup
