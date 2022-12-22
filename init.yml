@@ -147,11 +147,6 @@
         ansible.builtin.debug:
           msg: Check error message. JFLAP website has been inaccessible lately.
       
-  - name: Configuring VMM (Virtual Machine Manager)
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.command:
-      cmd: konsole -e 'bash install_VMM.sh "debian bullseye" apt'
-      
   - name: Installing pip packages
     check_mode: '{{ debug_mode }}'
     ansible.builtin.pip:
