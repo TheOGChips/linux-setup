@@ -121,12 +121,18 @@
       cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
     loop: "{{ aliases | dict2items }}"
       
-  - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.replace:
-      path: ~/.local/share/kxmlgui5/okular/shell.rc
-      regexp: '</gui>' # NOTE: This might need to be </kpartgui>
-      replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
+  - name: Attempt to reassign Okular full screen shortcut
+    block:
+      - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
+        check_mode: '{{ debug_mode }}'
+        ansible.builtin.replace:
+          path: ~/.local/share/kxmlgui5/okular/shell.rc
+          regexp: '</gui>' # NOTE: This might need to be </kpartgui>
+          replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
+    rescue:
+      - name: Okular shortcut eassignment failed
+        ansible.builtin.debug:
+          cmd: If the file couldn't be found, you might just need to manually change it in Okular first before it appears.
     
   # NOTE: Currently not working, website inaccessible
   - name: Attempting to install JFLAP
