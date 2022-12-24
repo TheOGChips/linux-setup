@@ -20,7 +20,8 @@ aliases: {
           'mpiclang++': 'OMPI_CC=clang++ mpic++',
           'update-vivi': "ansible-playbook {{ lookup('ansible.builtin.env', 'HOME') }}/Documents/linux_files/linux-setup/vivi.yml --extra-vars \"{\"debug_mode\":\"off\"}\"" ,
           #'wine32': "WINEPREFIX={{ lookup('ansible.builtin.env', 'HOME') }}/.wine32 wine"
-          #'clear': "printf '\33c\e[3J'"    # Only necessary for Rocky Linux 8.6 (unsure about 9)
+          #'clear': "printf '\33c\e[3J'",    # Only necessary for Rocky Linux 8.6 (unsure about 9)
+          'ls': 'ls --color=auto'
          }
          
 aliases_redhat_distros: {
