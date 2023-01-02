@@ -37,6 +37,7 @@ pkgs_to_install:
   - texstudio
   - thefuck
   - thunderbird
+  - tio
   - tree
   - vim
   - vim-fugitive
@@ -126,6 +127,7 @@ pkgs_to_install_for_rocky:
   - python3
   
 pkgs_to_install_from_pip:
+  - adafruit-ampy
   - numpy
   - pandas
   - matplotlib
