@@ -1,0 +1,160 @@
+# NOTE: Run using ansible-playbook -K init.yml
+---
+# The general play
+- name: Setting up localhost
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - debug_mode.yml
+    - pkgs_to_remove.yml
+    - pkgs_to_install.yml
+
+  tasks:
+  - name: Remove unwanted KDE packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: "{{ pkgs_to_remove + pkgs_to_remove_from_debian }}"
+      state: absent
+      
+  - name: Remove these packages manually
+    check_mode: '{{ debug_mode }}'
+    block:
+      - name: Attempting to remove packages
+        ansible.builtin.shell:
+          cmd: rm -r $(find / -name "{{ item }}")
+          warn: false
+        loop:
+          - '*contactthemeeditor*'
+          - '*contactprintthemeeditor*'
+          - '*headerthemeeditor*'
+          - '*pimdataexporter*'
+          - '*sieveeditor*'
+    rescue:
+      - name: Files couldn't be found
+        ansible.builtin.debug:
+          msg: The files could not be found and have likely already been deleted'
+      
+  - name: Upgrade current packages on machine
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      update_cache: yes
+      upgrade: safe
+      
+  - name: Install net-tools
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: net-tools
+      state: latest
+      
+  - name: Make edits to /etc/sudoers
+    check_mode: '{{ debug_mode }}'
+    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    ansible.builtin.command:
+      cmd: konsole -e 'bash visudo_edits.sh apt dpkg'
+      
+  - name: Removing GRUB menu timeout
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.replace:
+      path: /etc/default/grub
+      regexp: 'GRUB_TIMEOUT=5'
+      replace: 'GRUB_TIMEOUT=-1'
+      
+  - name: Updating GRUB
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: update-grub
+      
+  - name: Installing packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: "{{ pkgs_to_install }}"
+      state: present
+    
+  # NOTE: Place code for Raspberry Pi cluster-related stuff here
+  #bash cluster_access_setup/node_ssh_aliases_setup.sh
+  #bash cluster_access_setup/clusterssh_setup.sh
+  
+  # NOTE: Below is information on how to install the Waveforms SDK, should that ever be needed again
+  # Download and install the Adept runtime environment, then Waveforms
+  # https://mautic.digilentinc.com/adept-runtime-download     <- Adept runtime environment
+  # https://digilent.com/shop/software/digilent-waveforms/download    <- Waveforms SDK
+  # Tutorials:
+  #   - https://digilent.com/reference/software/waveforms/waveforms-3/getting-started-guide
+  #   - https://digilent.com/reference/test-and-measurement/guides/waveforms-using-waveforms-sdk
+  # firefox https://mautic.digilentinc.com/adept-runtime-download
+  # firefox https://digilent.com/shop/software/digilent-waveforms/download
+  
+  # NOTE: Instructions for installing MATLAB, if I should ever need it again
+  # Download and install MATLAB (currently getting a "file too short" error for libicudata.so.69)
+  #firefox https://www.mathworks.com/downloads/
+  #echo "alias update-matlab='sudo /usr/local/MATLAB/R2021a/bin/glnxa64/update_installer'" >> .bash_aliases
+  
+  # NOTE: In case I ever need to disable the touch screen the hard way
+  #if [ "$distro" = "$DEBIAN" ]
+  #  then
+  #  # NOTE: Since a basic use of sed seems to not work after testing in a VM, this was an easier
+  #  #       solution than trying to make time to go through the sed documentation. I just don't
+  #  #       have time for that currently.
+  #  # src: https://askubuntu.com/questions/198572/how-do-i-disable-the-touchscreen-drivers
+  #  LIBINPUT=/usr/share/X11/xorg.conf.d/40-libinput.conf
+  #  sudo chmod o+w "$LIBINPUT"
+  #  sudo echo '        Option "Ignore" "on"' >> "$LIBINPUT"
+  #  sudo chmod o-w "$LIBINPUT"
+  #  echo -e "\nA line for disabling hardware components has been added to the end of $LIBINPUT." echo 'Cut and paste it inside the section block of hardware component you want to disable.' echo -e "$LIBINPUT will now open in Vim...\n"
+  #  konsole -e "sudo vim $LIBINPUT"
+  #fi
+  
+# Play for user program configuations
+- name: Installing and configuring user programs
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+    - pkgs_to_install.yml
+    - aliases.yml
+
+  tasks:
+  - name: Writing aliases to "{{ aliases_file }}"
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.shell:
+      cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
+    loop: "{{ aliases | dict2items }}"
+      
+  - name: Attempt to reassign Okular full screen shortcut
+    block:
+      - name: Reassign Okular shortcut for full screen mode from Ctrl+Shift+F to F11
+        check_mode: '{{ debug_mode }}'
+        ansible.builtin.replace:
+          path: ~/.local/share/kxmlgui5/okular/shell.rc
+          regexp: '</gui>' # NOTE: This might need to be </kpartgui>
+          replace: '  <Action shortcut="F11" name="fullscreen"/>\n </ActionProperties>\n</gui>'
+    rescue:
+      - name: Okular shortcut eassignment failed
+        ansible.builtin.debug:
+          msg: If the file couldn't be found, you might just need to manually change it in Okular first before it appears.
+      
+  - name: Installing pip packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.pip:
+      name: '{{ pkgs_to_install_from_pip }}'
+      
+- ansible.builtin.import_playbook: nano_config.yml
+- ansible.builtin.import_playbook: git_config.yml
+- ansible.builtin.import_playbook: vim_config.yml
+- ansible.builtin.import_playbook: vmware_horizon.yml
+- ansible.builtin.import_playbook: flatpak.yml
+- ansible.builtin.import_playbook: Teensyduino.yml
+
+- name: Cleanup
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - debug_mode.yml
+    
+  tasks:
+  - name: Autoremoving packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      autoremove: true
