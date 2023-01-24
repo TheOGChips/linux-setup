@@ -24,7 +24,6 @@ pkgs_to_install:
   - make
   - nasm
   - neofetch
-  - plank
   - plasma-browser-integration
   - python3-pip
   - qgis
