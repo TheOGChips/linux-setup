@@ -132,7 +132,7 @@
     rescue:
       - name: Okular shortcut eassignment failed
         ansible.builtin.debug:
-          cmd: If the file couldn't be found, you might just need to manually change it in Okular first before it appears.
+          msg: If the file couldn't be found, you might just need to manually change it in Okular first before it appears.
     
   # NOTE: Currently not working, website inaccessible
   - name: Attempting to install JFLAP
