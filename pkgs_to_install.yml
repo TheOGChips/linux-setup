@@ -24,6 +24,7 @@ pkgs_to_install:
   - make
   - nasm
   - neofetch
+  - okular-extra-backends
   - plasma-browser-integration
   - python3-pip
   - qgis
