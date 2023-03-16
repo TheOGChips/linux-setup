@@ -133,19 +133,6 @@
       - name: Okular shortcut eassignment failed
         ansible.builtin.debug:
           msg: If the file couldn't be found, you might just need to manually change it in Okular first before it appears.
-    
-  # NOTE: Currently not working, website inaccessible
-  - name: Attempting to install JFLAP
-    block:
-      - name: Installing JFLAP
-        check_mode: '{{ debug_mode }}'
-        ansible.builtin.get_url:
-          url: https://www.jflap.org/jflaptmp/july27-18/JFLAP7.1.jar
-          dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
-    rescue:
-      - name: Installing JFLAP failed
-        ansible.builtin.debug:
-          msg: Check error message. JFLAP website has been inaccessible lately.
       
   - name: Installing pip packages
     check_mode: '{{ debug_mode }}'
@@ -153,21 +140,11 @@
       name: '{{ pkgs_to_install_from_pip }}'
       
 - ansible.builtin.import_playbook: nano_config.yml
-- ansible.builtin.import_playbook: ssh_config.yml
 - ansible.builtin.import_playbook: git_config.yml
-- ansible.builtin.import_playbook: local.yml
-- ansible.builtin.import_playbook: quentier.yml
-- ansible.builtin.import_playbook: OCaml_for_Debian.yml
-- ansible.builtin.import_playbook: Io.yml
 - ansible.builtin.import_playbook: vim_config.yml
-- ansible.builtin.import_playbook: vivi.yml
 - ansible.builtin.import_playbook: vmware_horizon.yml
-- ansible.builtin.import_playbook: bash.yml
-- ansible.builtin.import_playbook: zsh.yml
 - ansible.builtin.import_playbook: flatpak.yml
-#- ansible.builtin.import_playbook: Teensyduino.yml
-#- ansible.builtin.import_playbook: wine.yml
-- ansible.builtin.import_playbook: VMM.yml
+- ansible.builtin.import_playbook: Teensyduino.yml
 
 - name: Cleanup
   hosts: localhost
