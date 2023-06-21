@@ -1,0 +1,43 @@
+---
+pkgs_to_install:
+  - breeze
+  - clang
+  - flatpak
+  - gnote
+  - htop
+  - kate
+  - konsole
+  - make
+  - neofetch
+  #- python3-pip
+  - rust-all
+  - sl
+  #- texstudio
+  - thefuck
+  - thunderbird
+  - tio
+  - tree
+  - vim
+  - vim-fugitive
+  - vim-latexsuite
+  - vinagre
+  - vlc
+  - zsh
+  - zsh-doc
+  
+# NOTE: This might not be applicable now that Python has switched to virtual envs
+pkgs_to_install_from_pip:
+  #- adafruit-ampy
+  #- numpy
+  #- pandas
+  #- matplotlib
+  #- scipy
+  #- ipython
+  
+pkgs_to_install_flatpak:
+  #- com.discordapp.Discord
+  #- org.onlyoffice
+  #- org.raspberrypi.rpi-imager
+  #- com.st.STM32CubeIDE
+  #- com.microsoft.Teams
+  #- us.zoom.Zoom
