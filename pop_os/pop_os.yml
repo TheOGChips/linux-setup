@@ -63,7 +63,7 @@
       cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
     loop: "{{ aliases | dict2items }}"
       
-- ansible.builtin.import_playbook: nano_config.yml
+- ansible.builtin.import_playbook: ../nano_config.yml
 - ansible.builtin.import_playbook: ssh_config.yml
 - ansible.builtin.import_playbook: git_config.yml
 - ansible.builtin.import_playbook: local.yml
