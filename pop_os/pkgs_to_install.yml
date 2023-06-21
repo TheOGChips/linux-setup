@@ -9,6 +9,7 @@ pkgs_to_install:
   - konsole
   - make
   - neofetch
+  - python3-venv
   #- python3-pip
   - rust-all
   - sl
