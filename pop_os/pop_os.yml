@@ -72,7 +72,7 @@
 #- ansible.builtin.import_playbook: ../vmware_horizon.yml
 #- ansible.builtin.import_playbook: ../bash.yml
 #- ansible.builtin.import_playbook: ../zsh.yml
-- ansible.builtin.import_playbook: flatpak.yml
+- ansible.builtin.import_playbook: ../flatpak.yml
 #- ansible.builtin.import_playbook: Teensyduino.yml
 #- ansible.builtin.import_playbook: wine.yml
 - ansible.builtin.import_playbook: VMM.yml

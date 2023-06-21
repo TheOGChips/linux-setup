@@ -36,7 +36,7 @@ pkgs_to_install_from_pip:
   #- ipython
   
 pkgs_to_install_flatpak:
-  #- com.discordapp.Discord
+  - com.discordapp.Discord
   #- org.onlyoffice
   #- org.raspberrypi.rpi-imager
   #- com.st.STM32CubeIDE

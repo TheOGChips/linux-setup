@@ -32,7 +32,7 @@
             cmd: flatpak override {{ item }} --filesystem=home
           loop:
             - com.discordapp.Discord
-            - com.microsoft.Teams
+            #- com.microsoft.Teams
           
       rescue:
         - name: 'FLATPAK: Error installing flatpak programs'
