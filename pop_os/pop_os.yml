@@ -33,7 +33,7 @@
     check_mode: '{{ debug_mode }}'
     ansible.builtin.replace:
       path: /etc/default/grub
-      regexp: 'GRUB_TIMEOUT=5'
+      regexp: 'GRUB_TIMEOUT=0'
       replace: 'GRUB_TIMEOUT=-1'
       
   - name: Updating GRUB
