@@ -37,7 +37,7 @@ pkgs_to_install_from_pip:
   
 pkgs_to_install_flatpak:
   - com.discordapp.Discord
-  #- org.onlyoffice
+  #- org.onlyoffice.desktopeditors
   #- org.raspberrypi.rpi-imager
   #- com.st.STM32CubeIDE
   #- com.microsoft.Teams
