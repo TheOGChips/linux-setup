@@ -66,13 +66,10 @@
 - ansible.builtin.import_playbook: ../nano_config.yml
 - ansible.builtin.import_playbook: ssh_config.yml
 - ansible.builtin.import_playbook: git_config.yml
-- ansible.builtin.import_playbook: local.yml
-- ansible.builtin.import_playbook: quentier.yml
-- ansible.builtin.import_playbook: OCaml_for_Debian.yml
-- ansible.builtin.import_playbook: Io.yml
-- ansible.builtin.import_playbook: vim_config.yml
-- ansible.builtin.import_playbook: vivi.yml
-- ansible.builtin.import_playbook: vmware_horizon.yml
+#- ansible.builtin.import_playbook: local.yml
+- ansible.builtin.import_playbook: ../vim_config.yml
+#- ansible.builtin.import_playbook: ../vivi.yml
+#- ansible.builtin.import_playbook: ../vmware_horizon.yml
 - ansible.builtin.import_playbook: bash.yml
 - ansible.builtin.import_playbook: zsh.yml
 - ansible.builtin.import_playbook: flatpak.yml
