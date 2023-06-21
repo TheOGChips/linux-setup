@@ -35,8 +35,8 @@ vim_config_options:
   - 'nmap <silent> <A-Left> :wincmd h<CR>'
   - 'nmap <silent> <A-Right> :wincmd l<CR>'
   - ''
-  - '" Enable full LaTeX usability'
-  - 'filetype plugin on'
-  - 'set grepprg=grep\ -nH\ $*'
-  - 'filetype indent on'
-  - "let g:tex_flavor='latex'"
+  #- '" Enable full LaTeX usability'
+  #- 'filetype plugin on'
+  #- 'set grepprg=grep\ -nH\ $*'
+  #- 'filetype indent on'
+  #- "let g:tex_flavor='latex'"
