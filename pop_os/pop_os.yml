@@ -63,11 +63,6 @@
       cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
     loop: "{{ aliases | dict2items }}"
       
-  - name: Installing pip packages
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.pip:
-      name: '{{ pkgs_to_install_from_pip }}'
-      
 - ansible.builtin.import_playbook: nano_config.yml
 - ansible.builtin.import_playbook: ssh_config.yml
 - ansible.builtin.import_playbook: git_config.yml
