@@ -27,7 +27,7 @@
     check_mode: '{{ debug_mode }}'
     become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
     ansible.builtin.command:
-      cmd: konsole -e 'bash visudo_edits.sh apt dpkg'
+      cmd: konsole -e 'bash ../visudo_edits.sh apt dpkg'
       
   - name: Removing GRUB menu timeout
     check_mode: '{{ debug_mode }}'
