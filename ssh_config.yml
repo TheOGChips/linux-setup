@@ -8,10 +8,8 @@
     - key_names:
       - "github"
       - "gitlab"
-      - "physics-lab"
-      - "rpi4"
-      - "debian-vm"
-      - "debian_chroot"
+      #- "physics-lab"
+      - "pop-pi"
   vars_files:
     - debug_mode.yml
   
@@ -40,7 +38,7 @@
         ansible.builtin.debug:
           msg: SSH config file not found and could not be copied. You'll have to create it manually.
     
-  - name: Copying SSH key to {{ key_names[2] }}
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.command:
-      cmd: ssh-copy-id -i {{ ssh }}/{{ key_names[2] }} cswindell@{{ key_names[2] }}
+  #- name: Copying SSH key to {{ key_names[2] }}
+  #  check_mode: '{{ debug_mode }}'
+  #  ansible.builtin.command:
+  #    cmd: ssh-copy-id -i {{ ssh }}/{{ key_names[2] }} cswindell@{{ key_names[2] }}
