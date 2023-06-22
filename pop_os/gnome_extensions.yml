@@ -6,11 +6,17 @@
     - ../debug_mode.yml
 
   tasks:
+  - name: Ensuring local src directory exists
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.file:
+      path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src"
+      state: directory
+
   - name: Cloning gnome-shell-extension-installer repo
     check_mode: '{{ debug_mode }}'
     ansible.builtin.git:
       clone: true
-      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/Documents/gnome-shell-extension-installer"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/gnome-shell-extension-installer"
       repo: "git@github.com:brunelli/gnome-shell-extension-installer.git"
 
   - name: Ensuring local bin directory exists
@@ -22,7 +28,7 @@
   - name: Symlinking gnome-shell-extension-installer
     check_mode: '{{ debug_mode }}'
     ansible.builtin.file:
-      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/Documents/gnome-shell-extension-installer/gnome-shell-extension-installer"
+      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/gnome-shell-extension-installer/gnome-shell-extension-installer"
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin/gnome-shell-extension-installer"
       state: link
 
