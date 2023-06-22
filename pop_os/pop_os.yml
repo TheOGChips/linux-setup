@@ -1,4 +1,4 @@
-# NOTE: Run using ansible-playbook -K init.yml
+# NOTE: Run using ansible-playbook -K pop_os.yml
 ---
 # The general play
 - name: Setting up localhost
