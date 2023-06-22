@@ -4,6 +4,8 @@
   connection: local
   vars_files:
     - ../debug_mode.yml
+  vars:
+    - repo_name: gnome-shell-extension-installer
 
   tasks:
   - name: Ensuring local src directory exists
@@ -12,12 +14,12 @@
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src"
       state: directory
 
-  - name: Cloning gnome-shell-extension-installer repo
+  - name: Cloning {{ repo_name }} repo
     check_mode: '{{ debug_mode }}'
     ansible.builtin.git:
       clone: true
-      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/gnome-shell-extension-installer"
-      repo: "git@github.com:brunelli/gnome-shell-extension-installer.git"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}"
+      repo: "git@github.com:brunelli/{{ repo_name }}.git"
 
   - name: Ensuring local bin directory exists
     check_mode: '{{ debug_mode }}'
@@ -25,11 +27,11 @@
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
       state: directory
 
-  - name: Symlinking gnome-shell-extension-installer
+  - name: Symlinking {{ repo_name }}
     check_mode: '{{ debug_mode }}'
     ansible.builtin.file:
-      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/gnome-shell-extension-installer/gnome-shell-extension-installer"
-      path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin/gnome-shell-extension-installer"
+      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}/{{ repo_name }}"
+      path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin/{{ repo_name }}"
       state: link
 
   - name: Installing extensions
@@ -40,4 +42,4 @@
       # NOTE: --restart-shell doesn't seem to do anything (still need to restart
       #       manually)
       # NOTE: Consider putting these into a vars_files file if more get added
-      cmd: gnome-shell-extension-installer 4709 3733 --restart-shell
+      cmd: '{{ repo_name }} 4709 3733 --restart-shell'
