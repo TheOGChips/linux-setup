@@ -47,4 +47,4 @@
       # NOTE: --restart-shell doesn't seem to do anything (still need to restart
       #       manually)
       # NOTE: Consider putting these into a vars_files file if more get added
-      cmd: '{{ repo_name }} 4709 3733 --restart-shell'
+      cmd: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin/{{ repo_name }} 4709 3733 --restart-shell"
