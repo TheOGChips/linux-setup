@@ -16,10 +16,9 @@
 
   - name: Cloning {{ repo_name }} repo
     check_mode: '{{ debug_mode }}'
-    ansible.builtin.git:
-      clone: true
+    ansible.builtin.get_url:
+      url: "https://github.com/brunelli/{{ repo_name }}/archive/refs/heads/master.zip"
       dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}"
-      repo: "git@github.com:brunelli/{{ repo_name }}.git"
 
   - name: Ensuring local bin directory exists
     check_mode: '{{ debug_mode }}'
