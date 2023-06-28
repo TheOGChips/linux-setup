@@ -32,11 +32,10 @@
       src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}-master.zip"
       dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/"
 
-  # TODO: This is still broken right now
   - name: Symlinking {{ repo_name }}
     check_mode: '{{ debug_mode }}'
     ansible.builtin.file:
-      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}/{{ repo_name }}"
+      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}-master/{{ repo_name }}"
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin/{{ repo_name }}"
       state: link
 
