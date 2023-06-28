@@ -18,7 +18,7 @@
     check_mode: '{{ debug_mode }}'
     ansible.builtin.get_url:
       url: "https://github.com/brunelli/{{ repo_name }}/archive/refs/heads/master.zip"
-      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/"
 
   - name: Ensuring local bin directory exists
     check_mode: '{{ debug_mode }}'
@@ -26,6 +26,13 @@
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
       state: directory
 
+  - name: Unzipping gnome-shell-extension-installer
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.unarchive:
+      src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/master.zip"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/"
+
+  # TODO: This is still broken right now
   - name: Symlinking {{ repo_name }}
     check_mode: '{{ debug_mode }}'
     ansible.builtin.file:
