@@ -22,6 +22,7 @@ pkgs_to_install:
   - vim-fugitive
   - vim-latexsuite
   - vinagre
+  - virt-manager
   - vlc
   - zsh
   - zsh-doc
