@@ -27,15 +27,6 @@ pkgs_to_install:
   - zsh
   - zsh-doc
   
-# NOTE: This might not be applicable now that Python has switched to virtual envs
-pkgs_to_install_from_pip:
-  #- adafruit-ampy
-  #- numpy
-  #- pandas
-  #- matplotlib
-  #- scipy
-  #- ipython
-  
 pkgs_to_install_flatpak:
   - com.discordapp.Discord
   #- org.onlyoffice.desktopeditors
