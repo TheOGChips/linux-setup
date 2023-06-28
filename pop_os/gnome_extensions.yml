@@ -26,11 +26,17 @@
       path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/bin"
       state: directory
 
-  - name: Unzipping gnome-shell-extension-installer
+  - name: Unzipping {{ repo_name }}
     check_mode: '{{ debug_mode }}'
     ansible.builtin.unarchive:
       src: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}-master.zip"
       dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/"
+
+  - name: Removing {{ repo_name }} zip file
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.file:
+      path: "{{ lookup('ansible.builtin.env', 'HOME') }}/.local/src/{{ repo_name }}-master.zip"
+      state: absent
 
   - name: Symlinking {{ repo_name }}
     check_mode: '{{ debug_mode }}'
