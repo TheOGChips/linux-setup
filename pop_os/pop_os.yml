@@ -16,12 +16,12 @@
     ansible.builtin.apt:
       update_cache: yes
       upgrade: safe
-      
-  - name: Install net-tools
+
+  - name: Installing packages
     check_mode: '{{ debug_mode }}'
     ansible.builtin.apt:
-      name: net-tools
-      state: latest
+      name: "{{ pkgs_to_install }}"
+      state: present
       
   - name: Make edits to /etc/sudoers
     check_mode: '{{ debug_mode }}'
@@ -40,12 +40,6 @@
     check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
       cmd: update-grub
-      
-  - name: Installing packages
-    check_mode: '{{ debug_mode }}'
-    ansible.builtin.apt:
-      name: "{{ pkgs_to_install }}"
-      state: present
   
 # Play for user program configuations
 - name: Installing and configuring user programs
