@@ -2,7 +2,7 @@
 pkg_mgr="$1"
 alt_pkg_mgr="$2"
 
-echo "\nThe following lines must be added from visudo AT THE END of the file:"
+echo -e "\nThe following lines must be added from visudo AT THE END of the file:"
 for cmd in "$pkg_mgr" "$alt_pkg_mgr"
     do
     echo -e "\t$USER $HOSTNAME = (root) NOPASSWD: $(sudo which $cmd)"
