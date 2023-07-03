@@ -3,6 +3,7 @@ pkgs_to_install:
   - breeze
   - clang
   - flatpak
+  #- gnome-shell-extension-gsconnect
   - gnote
   - htop
   - kate
