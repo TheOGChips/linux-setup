@@ -5,4 +5,5 @@ aliases: {
     'su': 'sudo su',
     'apt': 'sudo apt',
     'dpkg': 'sudo dpkg',
+    'ls': 'ls --color=auto',
 }
