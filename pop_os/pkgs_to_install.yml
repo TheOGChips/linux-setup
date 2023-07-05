@@ -9,6 +9,7 @@ pkgs_to_install:
   - kate
   - konsole
   - make
+  - mozillavpn
   - neofetch
   - net-tools
   - python3-venv

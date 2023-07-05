@@ -11,6 +11,13 @@
     - pkgs_to_install.yml
 
   tasks:
+  - name: Adding Mozilla VPN PPA
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt_repository:
+      repo: ppa:mozillacorp/mozillavpn
+      state: present
+      update_cache: true
+
   - name: Upgrade current packages on machine
     check_mode: '{{ debug_mode }}'
     ansible.builtin.apt:
