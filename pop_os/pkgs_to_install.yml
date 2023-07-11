@@ -13,7 +13,6 @@ pkgs_to_install:
   - neofetch
   - net-tools
   - python3-venv
-  - rust-all
   - sl
   #- texstudio
   - thefuck
