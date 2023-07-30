@@ -25,3 +25,8 @@
     ansible.builtin.file:
       path: '{{ INSTALLER }}'
       state: absent
+
+  - name: 'RUST: Installing rust-analyzer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: rustup component add rust-analyzer
