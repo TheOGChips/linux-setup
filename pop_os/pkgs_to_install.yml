@@ -8,6 +8,7 @@ pkgs_to_install:
   - htop
   - kate
   - konsole
+  - libheif-examples
   - make
   - mozillavpn
   - neofetch
