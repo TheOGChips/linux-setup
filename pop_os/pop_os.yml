@@ -78,6 +78,7 @@
 #- ansible.builtin.import_playbook: ../wine.yml
 #- ansible.builtin.import_playbook: ../VMM.yml
 - ansible.builtin.import_playbook: gnome_extensions.yml
+- ansible.builtin.import_playbook: bluray.yml
 
 - name: Cleanup
   hosts: localhost
