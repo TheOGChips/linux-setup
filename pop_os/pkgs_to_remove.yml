@@ -3,3 +3,4 @@ pkgs_to_remove:
   - geary
   - gedit
   - totem
+  - nautilus-extension-gnome-terminal

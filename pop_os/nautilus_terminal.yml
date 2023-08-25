@@ -1,0 +1,30 @@
+# SRC: https://github.com/Stunkymonkey/nautilus-open-any-terminal/tree/master
+# NOTE: This installs an extension to Nautilus that allows it to open any
+#       terminal program at the current location.
+---
+- name: Setting default terminal for Nautilus
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../debug_mode.yml
+  vars:
+    - terminal: konsole
+    - extension: nautilus-open-any-terminal
+
+  tasks:
+  - name: Installing extension {{ extension }}
+    check_mode: on
+    ansible.builtin.pip:
+      name: '{{ extension }}'
+      state: present
+      extra_args: --user
+
+  - name: Pre-configuring {{ extension }} behavior
+    check_mode: on
+    ansible.builtin.command:
+      cmd: glib-compile-schemas {{ lookup('ansible.builtin.env', 'HOME') }}/.local/share/glib-2.0/schemas/
+
+  - name: Configuring {{ extension }} to use {{ terminal }}
+    check_mode: on
+    ansible.builtin.command:
+      cmd: gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal {{ terminal }}

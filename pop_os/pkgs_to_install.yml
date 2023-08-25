@@ -13,6 +13,7 @@ pkgs_to_install:
   - mozillavpn
   - neofetch
   - net-tools
+  - python3-pip
   - python3-venv
   - sl
   #- texstudio
