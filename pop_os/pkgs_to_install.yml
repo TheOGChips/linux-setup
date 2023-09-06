@@ -37,3 +37,4 @@ pkgs_to_install_flatpak:
   #- com.st.STM32CubeIDE
   #- com.microsoft.Teams
   #- us.zoom.Zoom
+  - com.github.Eloston.UngoogledChromium
