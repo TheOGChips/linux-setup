@@ -14,6 +14,7 @@ pkgs_to_install:
   - neofetch
   - net-tools
   - python3-pip
+  - python3-tk
   - python3-venv
   - sl
   #- texstudio
