@@ -29,4 +29,4 @@
   - name: 'RUST: Installing rust-analyzer'
     check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
-      cmd: rustup component add rust-analyzer
+      cmd: "{{ lookup('ansible.builtin.env', 'HOME') }}/.cargo/bin/rustup component add rust-analyzer"
