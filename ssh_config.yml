@@ -7,7 +7,7 @@
     - ssh_config: "{{ ssh }}/config"
     - key_names:
       - "github"
-      - "gitlab"
+      - "gitlab-ttu"
       #- "physics-lab"
       - "razzpi"
   vars_files:
