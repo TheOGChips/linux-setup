@@ -18,6 +18,13 @@
       state: present
       update_cache: true
 
+  - name: Adding Helix PPA
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt_repository:
+      repo: ppa:maveonair/helix-editor
+      state: present
+      update_cache: true
+
   - name: Upgrade current packages on machine
     check_mode: '{{ debug_mode }}'
     ansible.builtin.apt:
@@ -78,7 +85,7 @@
 #- ansible.builtin.import_playbook: ../wine.yml
 #- ansible.builtin.import_playbook: ../VMM.yml
 - ansible.builtin.import_playbook: gnome_extensions.yml
-- ansible.builtin.import_playbook: bluray.yml
+#- ansible.builtin.import_playbook: bluray.yml
 - ansible.builtin.import_playbook: nautilus_terminal.yml
 
 - name: Cleanup

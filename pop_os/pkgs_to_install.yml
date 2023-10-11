@@ -5,6 +5,7 @@ pkgs_to_install:
   - flatpak
   #- gnome-shell-extension-gsconnect
   - gnote
+  - helix
   - htop
   - kate
   - konsole
