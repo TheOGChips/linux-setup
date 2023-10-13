@@ -6,4 +6,5 @@ aliases: {
     'apt': 'sudo apt',
     'dpkg': 'sudo dpkg',
     'ls': 'ls --color=auto',
+    'gnome-shell-restart': 'killall -3 gnome-shell',
 }
