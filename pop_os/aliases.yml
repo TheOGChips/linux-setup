@@ -7,4 +7,5 @@ aliases: {
     'dpkg': 'sudo dpkg',
     'ls': 'ls --color=auto',
     'gnome-shell-restart': 'killall -3 gnome-shell',
+    'date'='date "+%a %d %b %Y %I:%M:%S %p %Z"',
 }
