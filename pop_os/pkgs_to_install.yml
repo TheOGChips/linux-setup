@@ -13,6 +13,7 @@ pkgs_to_install:
   - make
   - minicom
   - mozillavpn
+  - mypy
   - neofetch
   - net-tools
   - python-is-python3
