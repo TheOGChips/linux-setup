@@ -11,6 +11,7 @@ pkgs_to_install:
   - konsole
   - libheif-examples
   - make
+  - minicom
   - mozillavpn
   - neofetch
   - net-tools
@@ -22,7 +23,7 @@ pkgs_to_install:
   #- texstudio
   - thefuck
   - thunderbird
-  - tio
+  #- tio
   - tree
   - vim
   - vim-fugitive
