@@ -1,0 +1,9 @@
+---
+aliases_file: "{{ lookup('ansible.builtin.env', 'HOME') }}/.aliases"
+
+aliases: {
+    'su': 'sudo su',
+    'apt': 'sudo apt',
+    'dpkg': 'sudo dpkg',
+    'date': 'date "+%a %d %b %Y %I:%M:%S %p %Z"',
+}

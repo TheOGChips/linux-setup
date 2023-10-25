@@ -1,0 +1,12 @@
+---
+pkgs_to_remove:
+  - exfalso
+  - goldendict
+  - mlterm
+  - mlterm-tools
+  - mlterm-common
+  - xiterm+thai
+  - mousepad
+  - xfce4-terminal
+  - xsane
+  - xterm

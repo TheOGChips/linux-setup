@@ -1,0 +1,106 @@
+# NOTE: Run using ansible-playbook -K pop_os.yml
+---
+# The general play
+- name: Setting up localhost
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - ../debug_mode.yml
+    - pkgs_to_remove.yml
+    - pkgs_to_install.yml
+
+  tasks:
+  - name: Downloading Proton VPN
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.get_url:
+      url: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-2_all.deb
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/Downloads/protonvpn.deb"
+
+  #- name: Adding Helix PPA
+  #  check_mode: '{{ debug_mode }}'
+  #  ansible.builtin.apt_repository:
+  #    repo: ppa:maveonair/helix-editor
+  #    state: present
+  #    update_cache: true
+
+  - name: Upgrade current packages on machine
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      update_cache: yes
+      upgrade: safe
+
+  - name: Installing packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: "{{ pkgs_to_install }}"
+      state: present
+
+  - name: Removing unwanted packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: "{{ pkgs_to_remove }}'
+      state: absent
+      
+  - name: Make edits to /etc/sudoers
+    check_mode: '{{ debug_mode }}'
+    become_user: "{{ lookup('ansible.builtin.env', 'USER') }}"
+    ansible.builtin.command:
+      cmd: konsole -e 'bash ../visudo_edits.sh apt dpkg'
+      
+  - name: Removing GRUB menu timeout
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.replace:
+      path: /etc/default/grub
+      regexp: 'GRUB_TIMEOUT=0'
+      replace: 'GRUB_TIMEOUT=-1'
+      
+  - name: Updating GRUB
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: update-grub
+  
+# Play for user program configuations
+- name: Installing and configuring user programs
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+    - pkgs_to_install.yml
+    - aliases.yml
+
+  tasks:
+  - name: Writing aliases to "{{ aliases_file }}"
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.shell:
+      cmd: echo "alias {{item.key}}='{{ item.value }}'" >> "{{ aliases_file }}"
+    loop: "{{ aliases | dict2items }}"
+      
+- ansible.builtin.import_playbook: ../nano_config.yml
+- ansible.builtin.import_playbook: ../ssh_config.yml
+- ansible.builtin.import_playbook: ../git_config.yml
+#- ansible.builtin.import_playbook: local.yml
+- ansible.builtin.import_playbook: ../vim_config.yml
+#- ansible.builtin.import_playbook: ../vivi.yml
+#- ansible.builtin.import_playbook: ../vmware_horizon.yml
+#- ansible.builtin.import_playbook: ../bash.yml
+#- ansible.builtin.import_playbook: ../zsh.yml
+- ansible.builtin.import_playbook: ../flatpak.yml
+#- ansible.builtin.import_playbook: ../Teensyduino.yml
+#- ansible.builtin.import_playbook: ../wine.yml
+#- ansible.builtin.import_playbook: ../VMM.yml
+#- ansible.builtin.import_playbook: gnome_extensions.yml
+#- ansible.builtin.import_playbook: bluray.yml
+
+- name: Cleanup
+  hosts: localhost
+  connection: local
+  become: yes
+  vars_files:
+    - debug_mode.yml
+    
+  tasks:
+  - name: Autoremoving packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      autoremove: false
