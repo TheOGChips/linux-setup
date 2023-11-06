@@ -22,6 +22,7 @@ pkgs_to_install:
   - python3-tk
   - python3-venv
   - ristretto
+  - rsync
   - sl
   #- texstudio
   - thefuck
