@@ -3,7 +3,7 @@ pkg_mgr="$1"
 alt_pkg_mgr="$2"
 
 echo "\nThe following lines must be added from visudo AT THE END of the file:"
-for cmd in "$pkg_mgr" "$alt_pkg_mgr" arp poweroff reboot ansible-playbook
+for cmd in "$pkg_mgr" "$alt_pkg_mgr" arp poweroff reboot ansible-playbook add-apt-repository
     do
     echo -e "\t$USER $HOSTNAME = (root) NOPASSWD: $(sudo which $cmd)"
 done
