@@ -17,12 +17,14 @@
       url: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_1.0.3-2_all.deb
       dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/Downloads/protonvpn.deb"
 
-  #- name: Adding Helix PPA
-  #  check_mode: '{{ debug_mode }}'
-  #  ansible.builtin.apt_repository:
-  #    repo: ppa:maveonair/helix-editor
-  #    state: present
-  #    update_cache: true
+  - name: Adding Helix Editor PPA
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt_repository:
+  #    repo: deb https://ppa.launchpadcontent.net/maveonair/helix-editor/ubuntu/ jammy main
+      repo: ppa:maveonair/helix-editor
+      codename: jammy
+      state: present
+      update_cache: true
 
   - name: Upgrade current packages on machine
     check_mode: '{{ debug_mode }}'
