@@ -41,7 +41,7 @@
   - name: Removing unwanted packages
     check_mode: '{{ debug_mode }}'
     ansible.builtin.apt:
-      name: "{{ pkgs_to_remove }}'
+      name: '{{ pkgs_to_remove }}'
       state: absent
       
   - name: Make edits to /etc/sudoers
