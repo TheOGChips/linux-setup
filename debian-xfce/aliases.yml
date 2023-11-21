@@ -6,4 +6,7 @@ aliases: {
     'apt': 'sudo apt',
     'dpkg': 'sudo dpkg',
     'date': 'date "+%a %d %b %Y %I:%M:%S %p %Z"',
+    'ls': 'ls --color=auto',
+    'arp': 'sudo arp',
+    'add-apt-repository': 'sudo add-apt-repository',
 }
