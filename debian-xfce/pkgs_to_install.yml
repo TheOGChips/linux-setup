@@ -68,7 +68,7 @@ pkgs_to_install_flatpak:
   - org.onlyoffice.desktopeditors
   - org.raspberrypi.rpi-imager
   #- com.st.STM32CubeIDE
-  #- com.microsoft.Teams
+  - com.microsoft.Teams
   - us.zoom.Zoom
   - com.github.Eloston.UngoogledChromium
   - https://valent.andyholmes.ca/valent.flatpakref
