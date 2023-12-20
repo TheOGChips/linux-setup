@@ -6,6 +6,7 @@
     - debug_mode.yml
   vars:
     - INSTALLER: rustup.sh
+    - RUSTUP: "{{ lookup('ansible.builtin.env', 'HOME') }}/.cargo/bin/rustup"
 
   tasks:
   - name: 'RUST: Downloading rustup installer'
@@ -29,4 +30,14 @@
   - name: 'RUST: Installing rust-analyzer'
     check_mode: '{{ debug_mode }}'
     ansible.builtin.command:
-      cmd: "{{ lookup('ansible.builtin.env', 'HOME') }}/.cargo/bin/rustup component add rust-analyzer"
+      cmd: '{{ RUSTUP }} component add rust-analyzer'
+
+  - name: 'RUST: Removing rustfmt from stable toolchain'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: '{{ RUSTUP }} component remove rustfmt'
+
+  - name: 'RUST: Installing nightly toolchain'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: '{{ RUSTUP }} toolchain install nightly'
