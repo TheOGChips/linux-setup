@@ -9,4 +9,5 @@ aliases: {
     'ls': 'ls --color=auto',
     'arp': 'sudo arp',
     'add-apt-repository': 'sudo add-apt-repository',
+    'rustfmt': 'rustup run nightly rustfmt',
 }

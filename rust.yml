@@ -37,4 +37,7 @@
     ansible.builtin.command:
       cmd: '{{ RUSTUP }} component remove rustfmt'
 
-  # TODO: Install nightly toolchain
+  - name: 'RUST: Installing nightly toolchain'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: '{{ RUSTUP }} toolchain install nightly'
