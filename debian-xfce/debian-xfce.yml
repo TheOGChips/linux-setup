@@ -93,6 +93,7 @@
 #- ansible.builtin.import_playbook: ../VMM.yml
 #- ansible.builtin.import_playbook: gnome_extensions.yml
 #- ansible.builtin.import_playbook: bluray.yml
+- ansible.builtin.import_playbook: ../rust.yml
 
 - name: Cleanup
   hosts: localhost

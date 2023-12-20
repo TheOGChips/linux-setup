@@ -1,0 +1,36 @@
+---
+- name: Installing Rust
+  hosts: localhost
+  connection: local
+  vars_files:
+    - debug_mode.yml
+  vars:
+    - INSTALLER: rustup.sh
+    - RUSTUP: "{{ lookup('ansible.builtin.env', 'HOME') }}/.cargo/bin/rustup"
+
+  tasks:
+  - name: 'RUST: Downloading rustup installer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.shell:
+      #cmd: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      cmd: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > '{{ INSTALLER }}'
+      warn: false
+
+  - name: 'RUST: Running rustup installer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: sh '{{ INSTALLER }}' -y
+
+  - name: 'RUST: Removing rustup installer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.file:
+      path: '{{ INSTALLER }}'
+      state: absent
+
+  - name: 'RUST: Installing rust-analyzer'
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: '{{ RUSTUP }} component add rust-analyzer'
+
+  # TODO: Remove rustfmt from stable
+  # TODO: Install nightly toolchain
