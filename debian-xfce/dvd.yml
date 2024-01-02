@@ -1,0 +1,30 @@
+# https://www.cyberciti.biz/faq/installing-plugins-codecs-libdvdcss-in-debian-ubuntu-linux/
+---
+- name: Enabling DVD support
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../debug_mode.yml
+  vars:
+    - dvd_pkgs:
+      - software-properties-common
+      - libdvd-pkg
+      #- regionset
+      #- libavcodec-extra
+
+  tasks:
+  - name: Adding Contrib repos
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: sudo apt-add-repository contrib
+
+  - name: Installing DVD support packages
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.apt:
+      name: '{{ dvd_pkgs }}'
+      state: present
+
+  - name: Configuring libdvd-pkg
+    check_mode: '{{ debug_mode }}'
+    ansible.builtin.command:
+      cmd: sudo dpkg-reconfigure libdvd-pkg
