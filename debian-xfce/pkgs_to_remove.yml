@@ -5,8 +5,9 @@ pkgs_to_remove:
   - mlterm
   - mlterm-tools
   - mlterm-common
-  - xiterm+thai
   - mousepad
+  - parole
   - xfce4-terminal
+  - xiterm+thai
   - xsane
   - xterm

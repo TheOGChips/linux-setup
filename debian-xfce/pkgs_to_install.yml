@@ -40,7 +40,7 @@ pkgs_to_install:
   - vim-latexsuite
   - vinagre
   #- virt-manager
-  #- vlc
+  - vlc
   - wget
   - xarchiver
   - xfburn
