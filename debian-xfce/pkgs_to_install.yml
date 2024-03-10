@@ -27,6 +27,7 @@ pkgs_to_install:
   - rsync
   - sl
   - software-properties-common
+  - systemd-timesyncd
   #- texstudio
   - thefuck
   - thunderbird
