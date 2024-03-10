@@ -42,3 +42,8 @@ pkgs_to_install_flatpak:
   #- com.microsoft.Teams
   #- us.zoom.Zoom
   - com.github.Eloston.UngoogledChromium
+  - ca.andyholmes.Valent
+  #- com.adobe.Reader
+  - com.sindresorhus.Caprine
+  #- dev.lapce.lapce
+  #- org.signal.Signal
