@@ -20,6 +20,7 @@ pkgs_to_install:
   - python3-tk
   - python3-venv
   - sl
+  - systemd-timesyncd
   #- texstudio
   - thefuck
   - thunderbird
