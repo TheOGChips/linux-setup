@@ -11,7 +11,6 @@ pkgs_to_install:
   - doxygen
   - flatpak
   - gimp
-  - gnote
   - gprolog
   - htop
   - julia
@@ -154,3 +153,4 @@ pkgs_to_install_flatpak:
   #- com.st.STM32CubeIDE
   - com.microsoft.Teams
   #- us.zoom.Zoom
+  - org.standardnotes.standardnotes
